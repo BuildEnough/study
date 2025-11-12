@@ -1,4 +1,4 @@
-package com.mysite.demo;
+package com.mysite.demo.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
