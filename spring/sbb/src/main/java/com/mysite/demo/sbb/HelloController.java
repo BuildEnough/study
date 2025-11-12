@@ -1,4 +1,4 @@
-package com.mysite.demo.user;
+package com.mysite.demo.sbb;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
