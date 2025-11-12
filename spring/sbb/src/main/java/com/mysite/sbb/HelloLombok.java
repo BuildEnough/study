@@ -1,4 +1,4 @@
-package com.mysite.demo.sbb;
+package com.mysite.sbb;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

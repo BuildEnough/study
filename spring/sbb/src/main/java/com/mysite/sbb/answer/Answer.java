@@ -1,8 +1,8 @@
-package com.mysite.demo.answer;
+package com.mysite.sbb.answer;
 
 import java.time.LocalDateTime;
 
-import com.mysite.demo.question.Question;
+import com.mysite.sbb.question.Question;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

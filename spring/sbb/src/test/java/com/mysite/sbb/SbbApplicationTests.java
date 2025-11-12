@@ -1,4 +1,4 @@
-package com.mysite.demo;
+package com.mysite.sbb;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mysite.demo.answer.Answer;
-import com.mysite.demo.answer.AnswerRepository;
-import com.mysite.demo.question.Question;
-import com.mysite.demo.question.QuestionRepository;
+import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.answer.AnswerRepository;
+import com.mysite.sbb.question.Question;
+import com.mysite.sbb.question.QuestionRepository;
 
 @SpringBootTest
 class SbbApplicationTests {
