@@ -12,9 +12,9 @@
   "dependencies": {
     "antd": "^6.0.0",
     "copy-to-clipboard": "^3.3.3",
+    "lottie-react": "^2.4.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-lottie": "^1.2.10",
     "react-router-dom": "^7.9.6",
     "react-share": "^5.2.2"
   },

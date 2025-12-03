@@ -1,4 +1,4 @@
-import Lottie from "react-lottie";
+import Lottie from "lottie-react";
 import animationData from "../../assets/loading-animation.json";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -61,6 +61,7 @@ function Loading({mbtiScore, currentTest}) {
     //         style={{ marginTop: "10re,"}} 
     //     />
     // );
+    
 }
 
 export default Loading;
