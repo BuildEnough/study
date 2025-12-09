@@ -62,6 +62,17 @@ body {
     float: left;
     width: 140px;
     cursor: pointer;
+
+}
+
+.header .nav .menu3:hover {
+    color: blue;
+    background-color: orange;
+}
+
+.header .nav .menu3:active {
+    color: red;
+    background-color: purple;
 }
 
 .header .nav .menu4 {

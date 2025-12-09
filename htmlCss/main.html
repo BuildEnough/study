@@ -3,20 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <link rel="stylesheet" href="main.css">
+    <title>Document</title>
+    <style>
+        .notice {
+            /* visibility: hidden; */
+            display: none;
+        }
+
+        .notice_backgraound {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100vh;
+            background-color: black;
+            z-index: 2;
+            opacity: 0.3;
+        }
+        .notice_border {
+            position: relative;
+            top: 22vh;
+            margin : 0 auto;
+            width: 500px;
+            height: 500px;
+            background-color: white;
+            z-index: 3;
+        }
+
+        @media all and (max-width: 1280px){
+            .header .nav .menu2 {
+                display: none;
+            }
+            .header .nav .menu3 {
+                display: none;
+            }
+            .header .nav .menu4 {
+                display: none;
+            }
+            .header .nav .menu5 {
+                display: none;
+            }
+        }
+
+        @media all and (min-width: 1280px){
+            
+        }
+
+        /* .main .section1 .img1:hover {
+            transform: scale(2);
+            transition-delay: 1s;
+            transition-duration: 3s;
+        } */
+
+        .main .section1 .img1 {
+            animation-name: myanimation;
+            animation-duration: 3s;
+            animation-iteration-count: 2;
+        }
+        
+        @keyframes myanimation {
+            from {
+                margin-left: 0px;
+            }
+
+            50% {
+                margin-left: 200px;
+            }
+
+            to {
+                margin-left: 0px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
         <nav class="nav">
             <div class="menu1">회사이름</div>
-            <div class="menu2">메인 페이지</div>
+            <a href="index2.html" style="color: black;"><div class="menu2">메인 페이지</div></a>
             <div class="menu3">회사 역사</div>
             <div class="menu4">예약현황</div>
             <div class="menu5">QNA</div>
         </nav>
     </header>
     <main class="main">
+        <section class="notice">
+            <div class="notice_backgraound"></div>
+            <div style="position: absolute; width: 100%">
+                <div class="notice_border">공지사항</div>
+            </div>
+        </section>
         <section class="section1"><img class="img1" src="img/christmas.jpg" alt=""></section>
         <section class="section2">
             <div class="text1">xxx 레스토랑</div>
