@@ -51,3 +51,29 @@ message = "success" if score >= 60 else "faliure"
 `continue`
 
 ## for 문
+리스트, 튜플, 문자열의 첫 번째 요소부터 마지막 요소까지 차례로 수행
+
+### 다양한 for 문의 사용
+```python
+a = [(1,2), (3,4), (5,6)]
+for (first, second) in a:
+    print(first + second)
+```
+
+### continue 문
+continue를 수행하면 for문의 처음으로 돌아간다
+
+### range 함수
+숫자 리스트를 자동으로 만들어 준다
+```python
+for i in range(1, 11):
+    print(i)
+```
+
+### 리스트 컴프리헨션
+```python
+a = [1,2,3,4]
+
+result = [num*3 for num in a]
+print(result) # [3, 6, 9, 12]
+```
