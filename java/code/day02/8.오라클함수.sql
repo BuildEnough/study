@@ -54,6 +54,6 @@ SELECT round(1234.3456)
      , round(1234.3456, 3) -- 소수점 세번 째 자리까지 반올림
      , ceil(3.14)
      , floor(3.14)
-
-     , mod(10, 2)
+     , trunc(1234.3456, 3)
+     , mod(10, 3)
   FROM dual;
