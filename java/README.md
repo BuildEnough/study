@@ -230,7 +230,108 @@
         - `MOD`(나머지를구할수)
 
 
-## DB 특징
+### DB 특징
 - 모든 언어는 index가 0부터 시작
 - 단, `데이터베이스는 인덱스 1부터` 시작
 
+## Day03
+### 함수
+- 날짜 포맷 단어
+    - YYYY, YY
+    - MM, MON, MONTH
+    - DD, DDD, DY, DAY
+    - HH24, HH, HH12
+    - MI
+    - SS
+    - AM, PM
+- 오라클 함수
+    - 날짜 함수 - [쿼리](./code/day03/1.오라클함수.sql)
+        - `sysdate`: 기본, 현재 일시 반환
+        - ADD_MONTHS(날짜컬럼, 정수): 양수는 이후 달, 음수는 이전 달
+        - MONTHS_BETWEEN(비교날짜1, 비교날짜2): 두 날짜 사이의 개월 수
+        - NEXT_DAY(날짜, 요일): 날짜 이후의 해당요일 날짜 반환
+        - `LAST_DAY()`: 해당 날짜 달의 마지막일 리턴
+    - 형변환 함수
+        - TO_CHAR(날짜, '날짜포맷'): 날짜를 해당 포맷에 맞게 변경해서 표현
+        - TO_CHAR(숫자, '숫자포맷'): 숫자를 해당 포맷에 맞게 변경 표현
+        - TO_NUMBER(숫자로만된문자데이터, '숫자포맷'): 수로 된 문자열을 숫자로 변경
+        - TO_DATE(날짜형식문자데이터, '날짜포맷'): 문자데이터를 날짜데이터로 변경
+    - NULL, 처리함수 - [쿼리](./code/day03/2.NULL함수.sql)
+        - NULL(데이터없음)은 일부 개수 처리나 통계 불가, NULL값 처리
+        - NVL(널이들어간데이터, 널처리): 해당 값이 NULL이면 보통 0으로 변환
+        - NVL2(널이들어간데이터, 널이아닐때처리, 널일때처리): 널이 아닐 때와 널일 때로 나눠서 처리
+    - DECODE, CASE - [쿼리](./code/day03/3.decode_case.sql)
+        - 특정 열의 데이터가 어떤 데이터인지에 따라 다르게 처리할 때
+        - `DECODE`(컬럼, 조건, 결과, ...): 오라클 전용함수
+        - CASE문: CASE ~ WHEN ~TEHN ~ END ...
+
+### 다중행, 데이터 그룹화
+- 다중행(그룹) 함수 - [쿼리](./code/day03/4.다중행함수.sql)
+    - 여러 행의 데이터를 바탕으로 하나의 결과를 도출하는 함수
+    - SUM(): 데이터의 합, 급여, TAX, 점수 등 의미있는 데이터만 합할 것
+    - COUNT(): 데이터의 개수, NULL 영향 받음, 데이터 형에 영향 받지 않음, *(ALL)도 가능
+    - AVG(): 데이터의 평균, NULL에 영향을 받기 떄문에, NULL 값은 0으로 변경 후 계산해야됨
+    - MIN(): 데이터 중 최소값, 날짜, 문자열도 가능
+    - MAX(): 데이터 중 최대값, 날짜, 문자열도 가능
+- 그룹화 - [쿼리](./code/day03/5.그룹화.sql)
+    ```sql
+    SELECT [~], 다중행함수
+        FROM [테이블명|dual]
+      WHERE [조건식]
+    GROUP BY [그룹화할열지정] [ROLLUP|CUBE|GROUPING SETS]
+    ORDER BY [정렬조건]
+    ```
+    - 그룹화 시 유의점
+        - SELECT 절에 다중행 함수 외 일반 컬럼을 사용하고자하면, 반드시 GROUP BY 절에 일반 컬럼이 들어가 있어야 한다
+- HAVING절
+    - 일반 SELECT절의 조건은 WHERE로 처리
+    - 다중행 함수 등의 조건은 HAVING절로 처리해야 함
+    - 다중행(그룹) 함수는 WHERE절에 사용불가
+
+- 그룹화 관련 함수 - [쿼리](./code/day03/6.그룹화2.sql)
+    - ROLLUP: 해당 컬럼별 합계 도출
+    - CUBE: 해당 컬럼별 상세 소계 도출
+    - GROUPING SETS
+    - PIVOT: 일반 데이터(세로출력)을 가로출력으로 변경
+
+### Sample DB 생성
+system계정에서  
+```sql
+-- 사용자 생성
+CREATE USER sample IDENTIFIED BY java12345;
+
+-- 권한(grant privileges)
+-- DBA 권한: 주의요망
+GRANT CONNECT, resource, dba TO sample;
+```
+
+파워쉘에서 docker 실행
+```bash
+docker exec -it oracle-xe sqlplus sys/oracle as sysdba
+```
+
+```sql
+alter session set "_oracle_script"=true;
+
+create user scott identified by tiger
+default tablespace users quota unlimited on users;
+
+grant connect, resource, dba to scott;
+```
+
+```sql
+conn scott/tiger
+show user
+```
+
+```sql
+alter session set "_oracle_script"=true;
+alter session set nls_date_language='american';
+alter session set nls_date_format='dd-MON-rr';
+```
+
+### 조인
+#### 엔티티 관계  
+테이블 -> 다이어그램 보기 -> 설정 -> Notation type 변경
+![](img/6.png)
+- 조인 기본 - [쿼리](./code/day03/7.조인.sql)
