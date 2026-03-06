@@ -70,7 +70,7 @@
         ```
     - 컨테이너 내부 접속
         ```bash
-        docker exec -it oracle-xe sqlplus system/비밀번호@XE
+        docker exec -it oracle-xe sqlplus 계정/비밀번호@XE
         ```
         
     - Container DB 모드 확인 방법
@@ -335,3 +335,275 @@ alter session set nls_date_format='dd-MON-rr';
 테이블 -> 다이어그램 보기 -> 설정 -> Notation type 변경
 ![](img/6.png)
 - 조인 기본 - [쿼리](./code/day03/7.조인.sql)
+
+
+## Day04
+- 관계형 데이터베이스
+    - 관련된 데이터를 테이블 형태로 저장하고, 테이블간 관계를 통해 데이터를 관리하는 DB 모델
+    - 테이블: 데이터를 저장하는 구조, 엔티티
+    - 행: 관련 데이터가 모두 모인 하나의 데이터, `레코드`, `row`, tuple
+    - 열: 데이터 특징을 담는 하나의 속성, `컬럼`, `Attribute`
+    - PK: 각 행의 유일하게 식별하는 키, 여러 개의 PK를 가질수도 있다, Primary Key, 기본키
+    - FK: 부모 테이블의 PK와 관계를 맺는 키, Foreign Key, 왜래키
+- ERD(Entity Relationship Diagram)
+    - 관계형 데이터베이스 구조를 그림으로 표현한 설계도
+    - 데이터베이스를 만들기 전에 어떤 테이블이 필요하고 어떤 관계를 맺어야 하는지 시각적으로 표현  
+    ![](img/7.png)
+    - PK: `EMP.DEPTNO`, `DEPT.DEPTNO`
+    - FK: `EMP.DEPTNO`
+    - 일반컬럼: 그 외 나머지 컬럼들
+    - 부자관계 - DEPT(부), EMP(자)
+
+### 조인
+- 조인 - [쿼리](./code/day04/1.조인복습.sql)
+    - 내부 조인: `INNER JOIN`, EQUI JOIN
+    - 비등가 조인: 등가조인 외의 방법, Between등 사용
+    - `셀프 조인`: 자기 테이블을 조인, 자기 테이블 내에 PK외 FK가 지정되어 있어야 함
+        - 대부분 회사에서 조직도, 상사와 부하직원 관계를 볼 때 사용
+        ```sql
+        SELECT *
+            FROM EMP e1, EMP e2
+        WHERE e1.mgr = e2.EMPNO;
+        ```
+        - 나오지 않는 관계도 보고 싶은 경우 `(+)` 사용
+        - `(+)` 위치 주의
+        ```sql
+        SELECT e1.empno, e1.ename, e1.MGR 
+            , e1.HIREDATE
+            , e2.EMPNO AS mgr_empno
+            , e2.ename AS mgr_ename
+            FROM EMP e1, EMP e2
+        WHERE e1.mgr = e2.EMPNO (+);
+        ```
+    - `외부 조인`: 내부조인의 반대, OUTER JOIN 조인 기준에서 일치하지 않는 데이터도 나오도록 조회
+        - `LEFT OUTER JOIN`: 왼쪽 테이블 기준, 오른쪽 테이블에 일치하지 않는 데이터 조회
+        - `RIGHT OUTER JOIN`: 오른쪽 테이블 기준, 왼쪽 테이블에 일치하지 않는 데이터 조회
+- SQL-99 표준문법 조인 - [쿼리](./code/day04/2.표준조인.sql)
+    - JOIN ~ ON, INNER JOIN ~ ON: 내부 조인 (INNER) 생략 가능
+    - LEFE|RIGHT OUTER JOIN ~ ON: 외부 조인
+
+### 서브쿼리
+- 서브쿼리 - [쿼리](./code/day04/3.서브쿼리.sql)
+    - 메인쿼리 내에 소괄호()로 포함된 추가쿼리, SubQuery
+    - 대부분 조인으로 변경 가능
+    - 대부분 서브쿼리부터 작성 추천
+- 서브쿼리 종류
+    - 단일행 서브쿼리: 비교연산자로 서브쿼리 사용
+    - 다중행 서브쿼리
+        - IN: 메인쿼리 데이터가 서브쿼리 결과 중 하나라도 일치하는 데이터가 있으면
+        - ANY: 메인쿼리의 조건식을 만족하는 서브쿼리의 결과가 하나 이상이면
+        - ALL: 메인쿼리의 조건식을 서브쿼리의 결과 모두가 만족하면
+        - EXISTS: 서브쿼리의 결과가 존재하면(행이 1개 이상인 경우)
+    - 다중열 서브쿼리: 서브쿼리 결과가 여러 컬럼일 때 
+    - FROM절 서브쿼리: 가상의 테이블을 생성
+    - SELECT절 서브쿼리: 스칼라 서브쿼리, JOIN으로 변경 가능
+
+### DML
+- SQL문은 DML, DDL, DCL, TCL 구성
+    - Data Manipulation Language
+    - Data Definition Language
+    - Data Control Language
+    - Transaction Control Language
+- DML - [쿼리](./code/day04/4.DML.sql)
+    - 데이터 조작 언어: 데이터를 추가, 변경, 삭제, 조회하는 쿼리 명령어
+    - SELECT: 조회용
+    - INSERT: 생성(추가)용
+        ```sql
+        INSERT INTO 테이블명 (열1, 열2, ...) VALUES (열1값, 열2값, ...);
+        ```
+    - UPDATE: 변경(수정)용, `주의~`
+    - DELETE: 삭제용, `주의!`
+    - SELECT는 저장된 데이터의 변경 없음, 오직 조회만
+    - SELECT는 트랜잭션이 없고, 나머지는 트랜잭션이 매우 중요
+
+    
+## Day05
+### DML
+- INSERT: 데이터 생성 - [쿼리](./code/day05/1.INSERT.sql)  
+    **이거 중요하다고 봄**
+    ```sql
+    -- SELECT 결과를 그대로 테이블에 추가가능
+    INSERT INTO 테이블명 (열1, 열2, ...) 
+    SELECT 열1, 열2, ...
+    [WHRER 조건절]
+    [기타 SELECT 문]
+    ```    
+
+- UPDATE: 데이터 수정 - [쿼리](./code/day05/2.UPDATE_DELETE.sql)
+    - 기본 문법의 WHERE절은 무조건 작성, WHERE절 없는 수정문 주의
+    - WHERE절에는 제약조건 PK가 우선 작성
+    ```sql
+    UPDATE 변경할테이블
+        SET 열1-변경값, 열2=변경값, ... -- 변경할 열값만 추가
+    WHERE 데이터변경 대상행을 선별하기 위한 조건 -- 중요
+    ```
+
+- DELETE: 데이터 삭제
+    - WHERE 절을 빼는 경우 조심
+    ```sql
+    DELETE FROM 테이블
+        WHERE 삭제할대상행 선별하는 조건 -- 중요
+    ```
+
+### TCL
+- 트랜잭션 - [쿼리](./code/day05/3.트랜잭션.sql)
+    - 논리적으로 처리되는 쿼리들의 집합
+    - 여러 개 테이블에 조회, 수정, 삭제 등이 이뤄지는 논리 덩어리
+    - All or Nothong
+
+- 트랜잭션 설정: Oracle은 트랜잭션을 시작하는 `BEGIN TRAN[SACTION]`이 없음
+    - 첫 번째 쿼리부터 트랜잭션이 시작됨
+    - DBeaver의 경우 메뉴 -> 데이터베이스 -> 트랜잭션 모드 -> Manual Commit 변경
+    ![alt text](img/8.png)  
+    - 환경 설정 -> 연결 -> 연결 유형 -> `Auto-commit by default` 해제
+    ![alt text](img/9.png)  
+
+- 트랜잭션 명령어
+    - `COMMIT`: 영구 반영
+    - `ROLLBACK`: 트랜잭션 취소
+    - `SAVEPOINT`: 트랜잭션 중간 저장
+
+- 세션 - [쿼리](./code/day05/4.세션.sql)
+    - 하나의 연결로 접속해서 종료까지 기간
+
+- 락
+    - 세선 별로 트랜잭션이 문제발생하지 않도록 데이터를 잠그는 원리
+
+
+### DDL
+- 데이터 정의어
+    - 데이터베이스 객체 생성, 변경, 삭제하는 명령어
+- DDL 명령어 - [쿼리](./code/day05/5.DDL.sql)
+    - CREATE: 객체 생성, 대부분 테이블 생성시 사용
+        ```sql
+        CREATE [TABLE|DATABASE|VIEW|등 객체타입] [객체 생성시 필요한 문법];
+
+        -- 테이블 생성
+        CREATE TABLE 소유자.테이블명 (
+            열1이름 자료형,
+            열2이름 자료형,
+            ...
+            열N이름 자료형[,]
+
+            [각 제약조건]
+        );
+        ```
+    - ALTER: 객체 수정, 생성과 달리 수정할 수 있는 객체가 많이 없음
+        ```sql
+        -- 테이블 수정
+        ALTER TABLE 테이블명
+            ADD 열이름 자료형;
+            RENAME COLUMN 열이름 TO 새열이름;
+            MODIFY 열이름 변경자료형;
+            DROP COLUMN 삭제할열이름;
+        ```
+    - DROP: 객체 삭제, ALTER와 달리 대부분 객체에서 사용가능
+        - 테이블 등이 통채로 삭제되면 데이터 삭제됨
+        ```sql
+        DROP 객체타입 객체명;
+        ```
+    - RENAME: 객체 이름변경, 자주 사용하지 않음
+        ```sql
+        RENAME 이전객체명 TO 새객체명
+        ```
+    - TRUNCATE: 객체 내 데이터 모두 삭제, 대부분 테이블에서 진행
+        ```sql
+        -- DELETE FROM 테이블명과 동일, 단 트랜잭션이 발생하지 않아 복구 불가
+        -- 테이블 생성 이후 상태가 됨
+        TRUNCATE TABLE 테이블명
+        ```
+
+## Day06
+### DDL
+- DDL 명령어 - [쿼리](./code/day06/2.DDL.sql)
+
+### 객체
+ - [쿼리](./code/day06/3.Object.sql)
+- 데이터 사전: 일반 테이블 외 DB를 운영하는데 필요한 특수 테이블
+    - USER_XXXX: 현재 DB에 접속한 사용자가 소유한 객체 정보
+    - ALL_XXXX: 사용허가를 받은 객체 정보
+    - DBA_XXXX: DB 관리를 위한 정보(SYSTEM, SYS 사용자만 접근 가능)
+    - V$_XXXX: DB 성능 관련 정보
+- `인덱스`
+    - Full Table Scan: 모든 테이블의 데이터를 처음부터 끝까지 찾아서 데이터 조회
+    - Index Scan: 인덱스를 찾아서 해당 데이터를 조회
+    - 실제 DB에 5% 정도 용량이 추가됨, 인덱스 데이터를 저장해야 하기 때문
+    - 일정 시간마다 인덱스를 재정리, 데이터가 쌓여가는 중간에도 재정리(시간소요)
+    - 보통 SELECT WHERE 절에서 자주 필터링 되는 컬럼에 인덱스를 걸면 속도가 개선됨
+    - 대용량 데이터 (대략 몇 천만건)에서 속도개선을 위해 인덱스 사용
+        ```sql
+        -- 기본 문법
+        CREATE INDEX 인덱스명
+            ON 테이블명 (인덱스열 ASC|DESC,
+                        인덱스열 ASC|DESC, 
+                        ...);
+        
+        -- 삭제
+        DROP INDEX 인덱스명;
+        ```
+- 인덱스 종류
+    - 단일 인덱스: 하나의 컬럼에 거는 인덱스
+    - 복합 인덱스: 두 개 이상 컬럼에 거는 인덱스
+    - 고유 인덱스: 열에 중복 데이터가 없을 때
+    - 비고유 인덱스: 열에 중복되는 데이터가 있을 때
+    - 함수기반 인덱스: 산술식 등으로 가공된 값을 인덱스로 사용
+    - 비트맵 인덱스: 데이터 종류는 적고 같은 데이터가 많이 존재할때 사용하는 인덱스
+- 뷰
+    - 가상 테이블을 만드는 객체
+    - 물리적인 데이터를 따로 저장하지 않음
+    - SELECT문의 복잡한 쿼리를 저장해서 간단하게 사용
+    - 테이블의 특정 컬럼(민감한 급여, 보너스, 주민번호, 전화번호, ...)을 노출하지 않을 경우
+    - 주의!: `보기위한 객체지만 한 테이블의 SELECT * 일 경우 INSERT 가능`
+        ```sql
+        -- 기본 문법
+        CREATE [OR REPLACE] VIEW 뷰이름
+            AS (저장할 SELECT문)
+
+        -- 삭제
+        DROP VIEW 뷰이름;
+        ```
+- 시퀀스
+    - `오라클에만 존재하는 객체`
+    - 순번을 자동으로 매겨주는 기능
+        ```sql
+        -- 생성
+        CREATE SEQUENCE 시퀀스명
+        START WITH n
+        INCREMENT BY p
+        [MAXVALUE m | NOMAXVALUE] -- NOMAXVALUE 10의 27승
+        [MAXVALUE o | NOMINVALUE]
+        [CYCLE | NOCYCLE]
+        [CHCHE r | NOCACHE]
+
+        -- 수정
+        ALTER SEQUENCE 시퀀스명
+        -- START WITH  이 외 모두 사용가능
+
+        -- 삭제
+        DROP SEQUENCE 시퀀스명
+        ```
+### 제약조건
+- 제약조건 - [쿼리](./code/day06/4.제약조건.sql)
+    - 테이블에 저장할 데이터를 정확하게 규제하는 특수한 규칙
+    - 조건에 맞지 않는 데이터를 걸러내는 기능
+- 종류
+    - `NOT NULL`: 지정한 열에 NULL을 허용하지 않음, 무조건 데이터 입력해야 함
+        - 데이터 중복 허용
+    - `UNIQUE`: 지정한 열의 유일한 값이 되어야 함, 중복불가
+        - NULL은 중복에서 제외
+    - `PRIMARY KEY`: 지정한 열의 유일한 값이면서 NULL을 허용하지 않음
+        - PK는 **UNIQUE**에 **NOT NULL**
+        - PK를 지정하면 자동으로 UNIQUE 인덱스가 생성
+    - `FOREIGN KEY`: 다른 테이블의 PK열을 참조하여 PK열에 존재하는 값만 입력가능
+        - FK는 설계에 따라 NOT NULL(식별관계)일 수도 있고, NULL(비식별관계)일 수도 있음
+        - 자식 테이블에서 PK로 지정할 수도 있음, 일반 컬럼으로 FK만 지정 가능
+            - FK가 기본키면 NOT NULL
+    - `CHECK`: 설정한 조건식에 일치하는 데이터만 입력가능
+    - `DEFAULT`: 열에 데이터를 입력하지 않았을 때 기본값이 자동으로 입력
+- 데이터 무결성
+    - DB에 저장되는 데이터의 정확성과 일관성을 보장한다는 의미
+    - 영역 무결성(적절한 형식의 데이터나 NULL 불가), 개체 무결성(PK개념), 참조 무결성(FK개념)
+- CASECADE 계단식처리
+    - 부모 테이블의 PK 컬럼 해당 데이터를 지우면, 자식 테이블의 FK에 참조 중인 레코드를 전부 지우는 기능
+    - ON DELETE CASCADE: 부모 테이블 데이터를 지우면 자식 데이터도 삭제
+    - ON DELETE SET NULL: 부모 테이블의 데이터를 지우면, 자식의 FK 데이터가 자동 NULL
