@@ -1,0 +1,30 @@
+-- orclstudy로 실행
+CREATE TABLE sampletbl (
+	st_idx number(4) PRIMARY KEY,
+	content varchar2(200) NOT NULL,
+	code char(8) NOT NULL,
+	reg_date DATE DEFAULT sysdate
+);
+
+SELECT * FROM sampletbl;
+
+
+INSERT INTO sampletbl (st_idx, content, code)
+VALUES (1, '컨텐츠에요', '00000001');
+
+
+CREATE TABLE sampletbl2 (
+	st_idx number(4) PRIMARY KEY,
+	content varchar2(200) NOT NULL,
+	code char(8) NOT NULL,
+	reg_date DATE DEFAULT sysdate
+);
+
+
+-- 권한 해체하고 재접속하면 생성 불가
+CREATE TABLE sampletbl3 (
+	st_idx number(4) PRIMARY KEY,
+	content varchar2(200) NOT NULL,
+	code char(8) NOT NULL,
+	reg_date DATE DEFAULT sysdate
+);

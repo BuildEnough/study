@@ -123,5 +123,88 @@ SELECT * FROM dual;
 	
 SELECT * FROM dept_fk;
 
-INSERT INTO emp_fk ()
-values();
+INSERT INTO emp_fk (empno, ename, deptno)
+VALUES (1000, '성유고', 20);
+
+INSERT INTO emp_fk (empno, ename, deptno, job, mgr)
+VALUES (2000, '애슐리', 30, 'PRESIDENT', NULL);
+
+SELECT * FROM emp_fk;
+
+DELETE FROM emp_fk WHERE deptno = 20;
+DELETE FROM dept_fk WHERE deptno = 20;
+
+-- 5. CHECK: 지정한 조건식에 일치하는 데이터만 입력가능
+CREATE TABLE TBL_CHK(
+	login_id	varchar2(20)	PRIMARY KEY,
+	login_pwd	varchar2(20)	NOT NULL CHECK(LENGTH(login_pwd) > 7),
+	tel			varchar2(20)
+);
+
+INSERT INTO TBL_CHK(login_id, login_pwd, tel)
+VALUES ('asdfasdf', 'p12345s!', '010-9999-9999');
+
+SELECT * FROM TBL_CHK;
+
+-- 6. DEFAULT: 기본값 처리
+CREATE TABLE TBL_dft(
+	login_id	varchar2(20)	PRIMARY KEY,
+	login_pwd	varchar2(20)	DEFAULT '123456',
+	tel			varchar2(20),
+	reg_date	DATE DEFAULT sysdate
+);
+
+INSERT INTO TBL_dft(login_id, tel)
+VALUES ('asdfasdf', '010-9999-9999');
+
+SELECT * FROM TBL_dft;
+
+-- 중요! CASCADE
+-- FK 생성
+CREATE TABLE emp_fk (  -- FK지정용
+    empno NUMBER PRIMARY KEY,  -- PK이름 자동생성
+    ename varchar2(20) NOT NULL,
+    job   varchar2(10),
+    mgr NUMBER,
+    deptno NUMBER NOT NULL
+    	CONSTRAINT empfk_deptno_fk
+    	REFERENCES dept_fk(deptno)
+    	ON DELETE CASCADE -- 부모의 pk 값을 지우면 해당 데이터도 같이 삭제
+);
+
+SELECT * FROM dept_fk;
+SELECT * FROM emp_fk;
+
+-----------------------------------------------------------------------
+-- 기존 제약 조건 삭제
+ALTER TABLE emp_fk
+drop CONSTRAINT empfk_deptno_fk;
+
+-- cascade로 설정
+ALTER TABLE emp_fk
+ADD CONSTRAINT empfk_deptno_fk
+	FOREIGN KEY (deptno)
+	REFERENCES dept_fk(deptno)
+	ON DELETE cascade;
+
+-- 전부 초기화, 자식 테이블부터 삭제
+TRUNCATE TABLE emp_fk;
+TRUNCATE TABLE dept_fk;
+
+INSERT ALL
+	INTO dept_fk (deptno, dname, loc) VALUES (10, 'DEV', 'SEOUL')
+	INTO dept_fk (deptno, dname, loc) VALUES (20, 'ACCOUNTING', 'INCHEON')
+	INTO dept_fk (deptno, dname, loc) VALUES (30, 'FINANCE', 'BUSAN')
+SELECT * FROM dual;
+
+INSERT INTO emp_fk (empno, ename, deptno)
+VALUES (1000, '성유고', 20);
+
+INSERT INTO emp_fk (empno, ename, deptno, job, mgr)
+VALUES (2000, '애슐리', 30, 'PRESIDENT', NULL);
+
+SELECT * FROM dept_fk;
+SELECT * FROM emp_fk;
+
+-- cascade 핵심
+DELETE FROM dept_fk WHERE deptno = 20;
