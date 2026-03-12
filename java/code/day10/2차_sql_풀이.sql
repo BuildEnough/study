@@ -1,0 +1,64 @@
+--SELECT * FROM BOOKSTBL;
+--SELECT * FROM DIVTBL;
+--SELECT * FROM MEMBERTBL;
+--SELECT * FROM RENTALTBL;
+
+-- 1번
+SELECT RENTALTBL.idx AS 대여번호,
+       MEMBERTBL.names AS 회원명,
+       BOOKSTBL.names AS 책제목,
+       RENTALTBL.rentaldate AS 대여일
+FROM RENTALTBL
+ 	JOIN BOOKSTBL
+   		ON RENTALTBL.bookidx = BOOKSTBL.idx
+   	JOIN MEMBERTBL
+    	ON MEMBERTBL.idx = RENTALTBL.memberidx
+WHERE RENTALTBL.returndate IS NULL
+ORDER BY RENTALTBL.idx;
+
+
+-- 2번
+SELECT DIVTBL.division AS 분류코드,
+       DIVTBL.names AS 분류명,
+       COUNT(BOOKSTBL.idx) AS "도서수"
+FROM DIVTBL
+	LEFT JOIN BOOKSTBL
+    	ON DIVTBL.division = BOOKSTBL.division
+	GROUP BY DIVTBL.division, DIVTBL.names
+	ORDER BY DIVTBL.division;
+
+-- 3번
+SELECT BOOKSTBL.idx AS 책번호,
+       BOOKSTBL.names AS 책제목,
+       COUNT(RENTALTBL.idx) AS 대여횟수
+FROM bookstbl
+	JOIN RENTALTBL 
+    	ON BOOKSTBL.idx = RENTALTBL.bookidx
+	GROUP BY BOOKSTBL.idx, BOOKSTBL.names
+	ORDER BY COUNT(RENTALTBL.idx) DESC, BOOKSTBL.idx ASC;
+
+-- 4번
+SELECT MEMBERTBL.idx AS 회원번호,
+       MEMBERTBL.names AS 회원명,
+       MEMBERTBL.levels AS 등급,
+       COUNT(RENTALTBL.idx) AS 대여횟수
+FROM MEMBERTBL
+	JOIN RENTALTBL
+    	ON MEMBERTBL.idx = RENTALTBL.memberidx
+	GROUP BY MEMBERTBL.idx, MEMBERTBL.names, MEMBERTBL.levels
+		HAVING COUNT(RENTALTBL.idx) > 1
+	ORDER BY MEMBERTBL.idx;
+
+-- 5번
+SELECT RENTALTBL.idx AS 대여번호,
+       MEMBERTBL.names AS 회원명,
+       BOOKSTBL.names AS 책제목,
+       TO_CHAR(RENTALTBL.rentaldate, 'YYYY-MM-DD') AS 대여일,
+       TO_CHAR(RENTALTBL.returndate, 'YYYY-MM-DD') AS 반납일
+FROM RENTALTBL
+	JOIN MEMBERTBL
+    	ON RENTALTBL.memberidx = MEMBERTBL.idx
+	JOIN BOOKSTBL
+    	ON RENTALTBL.bookidx = BOOKSTBL.idx
+WHERE RENTALTBL.returndate < RENTALTBL.rentaldate
+ORDER BY RENTALTBL.idx;
