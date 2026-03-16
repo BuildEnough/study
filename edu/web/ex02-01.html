@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>데이터 수집 폼</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+        background: linear-gradient(135deg, #eef2ff, #f8fafc);
+        color: #1e293b;
+      }
+
+      .container {
+        max-width: 720px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+
+      .card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 32px;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: 32px;
+        text-align: center;
+        color: #0f172a;
+      }
+
+      .desc {
+        text-align: center;
+        color: #64748b;
+        margin-bottom: 28px;
+      }
+
+      .home-link {
+        display: inline-block;
+        margin-bottom: 18px;
+        text-decoration: none;
+        color: #2563eb;
+        font-weight: 700;
+      }
+
+      .home-link:hover {
+        text-decoration: underline;
+      }
+
+      .section {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .section-title {
+        font-size: 18px;
+        font-weight: 800;
+        color: #1d4ed8;
+        margin-bottom: 16px;
+      }
+
+      .form-group {
+        margin-bottom: 16px;
+      }
+
+      label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        font-size: 15px;
+        outline: none;
+        transition: 0.2s;
+        background: white;
+      }
+
+      input[type="text"]:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+      }
+
+      .option-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .option-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: white;
+        border: 1px solid #dbeafe;
+        border-radius: 12px;
+        padding: 10px 14px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .option-item input {
+        transform: scale(1.15);
+        cursor: pointer;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .buttons input {
+        flex: 1;
+        border: none;
+        border-radius: 12px;
+        padding: 14px;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      input[type="submit"] {
+        background: #2563eb;
+        color: white;
+      }
+
+      input[type="submit"]:hover {
+        background: #1d4ed8;
+      }
+
+      input[type="reset"] {
+        background: #e2e8f0;
+        color: #334155;
+      }
+
+      input[type="reset"]:hover {
+        background: #cbd5e1;
+      }
+
+      .notice {
+        margin-top: 16px;
+        font-size: 13px;
+        color: #64748b;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 600px) {
+        .card {
+          padding: 22px;
+        }
+
+        h1 {
+          font-size: 26px;
+        }
+
+        .buttons {
+          flex-direction: column;
+        }
+
+        .option-group {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <a href="index.html" class="home-link">← 홈으로</a>
+        <h1>데이터 수집</h1>
+        <p class="desc">구글폼과 연결된 사용자 입력 폼입니다.</p>
+
+        <form
+          action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScglDbClvrvqQplFeqT9OIDAjGFP708V9I10fuQGQK6r__1Fw/formResponse"
+          method="POST"
+          target="_self"
+        >
+          <div class="section">
+            <div class="section-title">기본 정보</div>
+
+            <div class="form-group">
+              <label for="lastName">당신의 성은</label>
+              <input
+                type="text"
+                id="lastName"
+                name="entry.493058872"
+                placeholder="성을 입력하세요"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="firstName">당신의 이름은</label>
+              <input
+                type="text"
+                id="firstName"
+                name="entry.1109910367"
+                placeholder="이름을 입력하세요"
+              />
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">아침을 드셨나요?</div>
+            <div class="option-group">
+              <label class="option-item">
+                <input
+                  type="checkbox"
+                  name="entry.43311067"
+                  value="밥을 먹는다"
+                />
+                밥을 먹는다
+              </label>
+
+              <label class="option-item">
+                <input
+                  type="checkbox"
+                  name="entry.43311067"
+                  value="빵을 먹는다"
+                />
+                빵을 먹는다
+              </label>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">학생인가요?</div>
+            <div class="option-group">
+              <label class="option-item">
+                <input
+                  type="radio"
+                  name="entry.2143621820"
+                  value="예"
+                  checked
+                />
+                예
+              </label>
+
+              <label class="option-item">
+                <input
+                  type="radio"
+                  name="entry.2143621820"
+                  value="아니요"
+                />
+                아니요
+              </label>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">공부를 잘하시나요?</div>
+            <div class="option-group">
+              <label class="option-item">
+                <input
+                  type="radio"
+                  name="entry.1461402714"
+                  value="잘해요"
+                  checked
+                />
+                잘해요
+              </label>
+
+              <label class="option-item">
+                <input
+                  type="radio"
+                  name="entry.1461402714"
+                  value="아니요"
+                />
+                아니요
+              </label>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <input type="submit" value="제출하기" />
+            <input type="reset" value="초기화" />
+          </div>
+
+          <p class="notice">
+            참고: 이 폼은 구글폼으로 직접 전송됩니다. 구글폼 설정에 따라 로그인 요구,
+            권한 제한, 응답 차단이 있을 수 있습니다.
+          </p>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
