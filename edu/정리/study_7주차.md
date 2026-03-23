@@ -28,7 +28,7 @@ CMD ["catalina.sh","run"]
 - 텍스트 추출 등 여러가지 기능 포함되어 있음
 
 ### VS CODE snippet 설정
-- `!!` 탭 클릭시 자동완성과, 탭 순서를 정할 수 있다ㄴ
+- `!!` 탭 클릭시 자동완성과, 탭 순서를 정할 수 있다
 - VSCODE -> 설정 -> snippet -> html
 ```json
 {
@@ -83,8 +83,11 @@ CMD ["catalina.sh","run"]
 
 
 ## 2026-03-17(29일차)
-###
-
+### CSS
+### VS CODE 검색창
+- Win + Shift + p  
+`>startup Performance`  
+`>running extensions`
 
 ### 스터디
 싱글톤(Singleton)
@@ -133,3 +136,15 @@ public class main {
 - 전역변수처럼 쓰이기 쉬움
 - 어디서든 접근 가능하니까 코드가 점점 싱글톤에 의존하게됨
     - 결합도 높아짐, 코드 추적이 어려워짐, 유지보수가 힘들어짐
+
+
+## 2026-03-18(30일차)
+### CSS
+
+## 2026-03-19(31일차)
+### CSS
+
+## 2026-03-20(32일차)
+### CSS
+- FLEX: justify-content(주축), align-items(교차축)
+### HTML에서 자바스크립트

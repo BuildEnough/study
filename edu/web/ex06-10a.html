@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keyframes</title>
+
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: rgb(96, 130, 194);
+            border-radius: 50%;
+            animation: mymove 2s infinite alternate;
+        }
+
+        @keyframes mymove {
+            0% {
+                transform: translateY(0) scaleX(1) scaleY(1);
+                animation-timing-function: ease-in; /* 빨라짐 */
+            }
+
+            85% {
+                transform: translateY(300px) scaleX(1) scaleY(1);
+                animation-timing-function: ease-out; /* 올라가다가 느려짐 */
+            }
+
+            100% {
+                transform: translateY(300px) scaleX(1.08) scaleY(0.92);
+                /* scaleX(1.08): 가로 효과, scaleY(0.92): 세로효과 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>keyframes</h1>
+    <hr />
+    <a href="index.html">홈으로</a><br />
+    <div></div>
+</body>
+</html>
