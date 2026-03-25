@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>학점 구하기</title>
+
+    <style>
+        h2 {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+
+    <script>
+        const score = Number(prompt("점수를 입력(0~100): ", ""));
+
+        switch (true) {
+            case score < 0 || score > 100:
+                alert("점수는 0점 이상 100점 이하만 입력 가능");
+                document.write(`<h2>잘못된 점수입니다. 0점 이상 100점 이하만 입력해주세요.</h2>`);
+                break;
+
+            case score == 100:
+                alert("A++학점");
+                document.write(`
+                    <h1>학점 계산기</h1>
+                    <h2>입력한 점수: ${score}점 <br> 학점: A++</h2>
+                `);
+                break;
+
+            case score >= 90:
+                alert("A학점");
+                document.write(`
+                    <h1>학점 계산기</h1>
+                    <h2>입력한 점수: ${score}점 <br> 학점: A학점</h2>
+                    `);
+                break;
+
+            case score >= 80:
+                alert("B학점");
+                document.write(`
+                    <h1>학점 계산기</h1>
+                    <h2>입력한 점수: ${score}점 <br> 학점: B학점</h2>
+                    `);
+                break;
+
+            case score >= 70:
+                alert("C학점");
+                document.write(`
+                    <h1>학점 계산기</h1>
+                    <h2>입력한 점수: ${score}점 <br> 학점: C학점</h2>
+                    `);
+                break;
+
+            case score >= 60:
+                alert("D학점");
+                document.write(`
+                    <h1>학점 계산기</h1>
+                    <h2>입력한 점수: ${score}점 <br> 학점: D학점</h2>
+                    `);
+                break;
+
+            default:
+                alert("F학점");
+                document.write(`
+                    <h1>학점 계산기</h1>
+                    <h2>입력한 점수: ${score}점 <br> 학점: F학점</h2>
+                    `);
+                break;
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
