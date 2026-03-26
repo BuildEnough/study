@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+</head>
+<body>
+    <script>
+        const box = ["딸기", "바나나", "사과", "수박", "배", "키위", "복숭아", "포도"];
+
+        // 1. {box} 중에 제거하고 싶은 품목을 입력하세요.
+        // 단, 없으면 없다고 알려주기
+        const removeItem = prompt(`${box} 중 제거하고 싶은 품목을 입력: `)
+
+        if (box.includes(removeItem)) {
+          const removeIndex = box.indexOf(removeItem);
+          box.splice(removeIndex, 1);
+          alert(`${removeItem} 제거 완료`);
+        } else if (removeItem === "") {
+          alert("제거하고 싶은 과일이 없는걸로 알겠습니다.");
+        }
+        else {
+          alert(`${removeItem} 는 box 배열에 없습니다.`);
+        }
+
+        // 2. {box} 외에 추가하고 싶은 품목을 입력하세요.
+        // 단, 이미 있다면 있다고 알려주기
+        const addItem = prompt(`현재 품목 ${box}\n추가하고 싶은 품목을 입력:`);
+
+        if (box.includes(addItem)) {
+          alert(`${addItem}은 box에 이미 있습니다.`);
+        } else if (removeItem === "") {
+          alert("추가하고 싶은 과일이 없는걸로 알겠습니다.");
+        }
+         else {
+          box.push(addItem);
+          alert(`${addItem}를 추가 완료`);
+        }
+
+        // 3. 정리된 품목은 {box} 입니다.
+        document.body.innerHTML = "<h2>과일목록 관리</h2>\n정리된 품목은 " + box + "입니다."
+    </script>
+</body>
+</html>

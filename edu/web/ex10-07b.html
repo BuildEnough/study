@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    영웅의 이름을 입력하세요<input type="text" id="heroName" /><br />
+    영웅의 레벨을 입력하세요<input type="text" id="heroLevel" /><br />
+    영웅의 스킬을 입력하세요<input type="text" id="heroSkill" placeholder="fire, ice, slow" /><br />
+
+    <button id="runBtn">실행</button>
+    <hr />
+    
+    <div id="result"></div>
+
+    <script>
+      let result = document.getElementById("result");
+
+      let lol = function (heroName, level = 1, cb) {
+        result.innerHTML += "==========================<br>";
+        result.innerHTML += `${heroName}님이 ${level}레벨이 되었습니다.<br>`;
+        result.innerHTML += "==========================<br>";
+
+        if (level >= 6) {
+          result.innerHTML += `${heroName}님이 궁극기를 씁니다.<br>`;
+          cb(level);
+        } else {
+          result.innerHTML += `${heroName}님이 깨작 평타를 때립니다.<br>`;
+        }
+      };
+
+      let fire = function (ff) {
+        for (let i = 1; i < ff + 1; i++) {
+          result.innerHTML += `${ff}레벨 이어서 ${i}개 메테오를 던집니다.<br>`;
+        }
+      };
+
+      let ice = function (ii) {
+        for (let i = 1; i < ii; i++) {
+          result.innerHTML += `${ii}레벨 이어서 ${i * 2}개 얼음을 던집니다.<br>`;
+        }
+      };
+
+      let slow = function (ss) {
+        for (let i = ss; i > 0; i--) {
+          result.innerHTML += `${ss}레벨 이어서 다리를 공격하여 이동속도를 ${i}% 줄입니다.<br>`;
+        }
+      };
+
+      let btn = document.getElementById("runBtn");
+
+      btn.onclick = function () {
+        result.innerHTML = "";
+
+        let name = document.getElementById("heroName").value;
+        let level = document.getElementById("heroLevel").value;
+        let skill = document.getElementById("heroSkill").value;
+
+        level = Number(level);
+
+        if (skill == "fire") {
+          lol(name, level, fire);
+        } else if (skill == "ice") {
+          lol(name, level, ice);
+        } else if (skill == "slow") {
+          lol(name, level, slow);
+        } else {
+          result.innerHTML = "스킬: fire, ice, slow 중에서 입력";
+        }
+      };
+    </script>
+  </body>
+</html>

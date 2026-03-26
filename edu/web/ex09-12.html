@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>주사위 확률</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    #result {
+      margin-top: 20px;
+      max-width: 500px;
+    }
+
+    .row {
+      margin-bottom: 12px;
+    }
+
+    .label {
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .bar-wrap {
+      width: 100%;
+      height: 24px;
+      background: #eee;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      background: #4a90e2;
+      color: white;
+      text-align: right;
+      line-height: 24px;
+      padding-right: 8px;
+      box-sizing: border-box;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>주사위 확률</h1>
+
+  <label for="rollCount">던지는 횟수:</label>
+  <input type="number" id="rollCount" value="100000" min="1">
+  <button id="runBtn">실행</button>
+
+  <p id="summary"></p>
+  <div id="result"></div>
+
+  <script>
+    const rollCountInput = document.getElementById("rollCount");
+    const runBtn = document.getElementById("runBtn");
+    const summary = document.getElementById("summary");
+    const result = document.getElementById("result");
+
+    function rollDice() {
+      return Math.floor(Math.random() * 6) + 1;
+    }
+
+    function simulate(count) {
+      const counts = [0, 0, 0, 0, 0, 0];
+
+      for (let i = 0; i < count; i++) {
+        const dice = rollDice();
+        counts[dice - 1]++;
+      }
+
+      return counts;
+    }
+
+    function showResult(counts, total) {
+      summary.textContent = "총 던진 횟수: " + total + "회";
+      result.innerHTML = "";
+
+      for (let i = 0; i < counts.length; i++) {
+        const count = counts[i];
+        const percent = (count / total * 100).toFixed(2);
+
+        result.innerHTML += `
+          <div class="row">
+            <div class="label">${i + 1}번 눈 : ${count}회 (${percent}%)</div>
+            <div class="bar-wrap">
+              <div class="bar" style="width: ${percent}%;">${percent}%</div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    runBtn.addEventListener("click", function () {
+      const total = parseInt(rollCountInput.value);
+
+      if (isNaN(total) || total < 1) {
+        alert("1 이상의 숫자를 입력하세요.");
+        return;
+      }
+
+      const counts = simulate(total);
+      showResult(counts, total);
+    });
+  </script>
+</body>
+</html>
