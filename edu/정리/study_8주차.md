@@ -450,3 +450,42 @@ UI와 UX는 따로 존재하는 것이 아니라 서로 영향을 준다.
 
 #### 13. 한 줄 결론
 > **UI는 사용자가 보는 화면이고, UX는 사용자가 겪는 경험이며, 좋은 서비스는 이 둘이 함께 좋아야 한다.**
+
+
+## 2026-03-27(37일차)
+### javascript
+```js
+const arr = [11, 22, 33];
+const arr2 = [...arr];
+```
+배열 복사  
+
+```js
+for (let i=0; i<10; i++>) {
+}
+```
+for 문  
+
+```js
+for (const i in arr) {
+
+}
+```
+인덱스 뽑음  
+
+```js
+for (const v of arr) {
+
+}
+```
+값을 뽑음  
+
+```js
+arr.forEach(콜백)
+```
+
+- stopPropagation()
+- map(), filter()
+- reduce
+- document.createElement()
+- document.appendChild()
