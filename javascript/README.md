@@ -1,0 +1,455 @@
+# 자바스크립트
+브라우저에서 실행되는 작은 프로그램으로 HTML 마크업 및 CSS 규칙과 상호작용하여 표시되는 내용과 브라우저에서 실행되는 작은 프로그램을 작성하고 현재 문서의 HTML 및 CSS를 변경할 수 있다.
+
+## 기초 문법
+### `<script>` 요소
+`<script>` 태그는 HTML 문서에서 자바스크립트를 작동하도록 함.  
+HTML 문서 어디든 상관없이 삽입할 수 있으며, 여러 개의 `<script>` 태그를 사용해도 무관.  
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript 연습</title>
+</head>
+<body>
+    <script>
+        document.write('<h1>환영합니다</h1>')
+        document.write('<p>JavaScript</p>')
+    </script>
+</body>
+</html>
+```
+
+---
+
+### 결과물 출력
+#### 외부 스크립트 파일 연결
+`sample.js`
+```js
+document.write('<p>외부 스크립트.</p>')
+```
+
+`javascript.html`
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript 연습</title>
+    <script src="js/sample.js"></script> <!-- 외부 스크립트 연결 -->
+</head>
+<body>
+    <script>
+        document.write('<p>내부 스크립트</p>')
+    </script>
+</body>
+</html>
+```
+자바스크립트가 작동되는 시점은 HTML 문서에 삽입된 위치에서 작동됨.  
+자바스크립트의 소스가 HTML 문서 어느 부분에서 작동시키는지 중요.  
+
+### 콘솔창 사용
+브라우저 안에서 프로그램을 확인하거나 필요한 결과를 출력할 수 있는 창  
+`ctrl + shift + j`, `cmd + opt + j`
+```html
+<script>
+    console.log(3+5);
+</script>
+```
+
+#### document.write()
+HTML 문서에서 직접 결괏값을 출력
+```html
+<script>
+    document.write('welcome <br>');
+    document.write('<h1>welcome</h1><br>');
+    document.write(2+3);
+</script>
+```
+
+#### alert()
+창을 열어서 원하는 값 출력  
+값만 사용자에게 전달
+```html
+<script>
+    alert("환영합니다");
+</script>
+```
+
+### 입력
+#### comfirm()
+브라우저가 사용자에게 질문하고 사용자의 답을 기다림
+```html
+<script>
+    var answer = confirm('20세 이상인가요?');
+    console.log(answer);
+</script>
+```
+
+#### prompt()
+브라우저가 사용자에게 질문을 하면 사용자는 자신의 답을 보낼 수 있다.
+```html
+<script>
+    var answer = prompt('20세 이상이면 나이를 입력: ');
+    console.log(answer);
+</script>
+```
+
+## 변수
+데이터를 저장하고 사용 또는 추가 변경 후 사용하는 데이터 저장소  
+변수 선언 -> 변수 초기화 -> 변수 사용
+
+```html
+<script>
+    var num1 = 5;
+    
+    var num2, num3, num4;
+    num2 = 10;
+    num3 = 15;
+    num4 = 20;
+</script>
+```
+
+### const
+상수 선언  
+상수 값으로 재할당할 수 없으며, 다시 선언도 할 수 없다.
+```html
+<script>
+    const my = 5;
+    my = 7; // 에러 발생(Assignment to constant variable)
+</script>
+```
+
+### let
+블록 변수  
+자신이 속한 영역에서 사용 가능한 변수를 만들어 사용할 수 있다.
+```html
+<script>
+    function logScope() {
+        let local = 2;
+
+        if (local) {
+            let local = '다른 값';
+            console.log(local); // 다른 값
+        }
+
+        console.log(local); // 2
+    }
+    logScope();
+</script>
+```
+
+### var
+변수를 선언하고, 선택적으로 초기화할 수 있다.  
+같은 이름의 변수는 하나의 변수로 인식됨
+```html
+<script>
+    function logScope() {
+        var local = 2;
+
+        if (local) {
+            var local = '다른 값';
+            console.log(local); // 다른 값
+        }
+
+        console.log(local); // 다른 값
+    }
+    logScope();
+</script>
+```
+
+## 데이터형
+`number`, `string`, `boolean`, `undefined`, `null`, `Infinity`
+
+### 데이터 형을 알려주는 연산자 `typeof`
+```html
+<script>
+    var num = -3.141592
+    var str = 'welcome';
+    var boolm = true;
+    var no = null;
+    var some;
+
+    console.log(typeof(num)); // number
+    console.log(typeof(str)); // string
+    console.log(typeof(boolm)); // boolean
+    console.log(typeof(no)); // object
+    console.log(typeof(some)); //undefined
+</script>
+```
+
+### String형(문자형)
+따옴표에 둘러싸여 있는 문자나 숫자
+```html
+<script>
+    var str1 = "봉래산";
+    var str2 = '<p class="main">문자데이터 입니다</p>';
+
+    document.write(str1);
+    document.write(str2);
+</script>
+```
+
+### Number형(숫자형)
+계산 작업이 가능한 정수와 실수
+```html
+<script>
+    var num1 = 5;
+    var num2 = 4;
+
+    var sum = num1 + num2;
+    console.log(sum);
+</script>
+```
+
+#### 문자형 데이터를 숫자로 바꾸기
+<script>
+    var num1 = "50";
+
+    var strToNum1 = Number(num1); // 문자형 -> 숫자형
+    console.log(strToNum1, typeof(strToNum1)); // 50 'number'
+    
+    var num2 = "60";
+    var strToNum2 = parseInt(num2); // 문자형 -> 숫자형
+    console.log(strToNum2, typeof(strToNum2)); // 60 'number'
+</script>
+
+### Boolean형(논리형)
+데이터를 비교하거나 논리를 펼쳐 true와 false의 상황을 판단하고자 할 때 사용  
+자바스크립트에선 데이터가 존재하면 `true`로, 데이터가 존재하지 않으면 `false`로 인식
+```html
+<script>
+    var bol1 = 1<2;
+    var bol2 = true;
+    var bol3 = !false;
+    console.log(bol1, bol2, bol3); // true true true
+
+    var bol4 = Boolean(0);
+    var bol5 = Boolean(null);
+    var bol6 = Boolean(undefined);
+    var bol7 = Boolean('welcome');
+    console.log(bol4, bol5, bol6, bol7); // false false false true
+</script>
+```
+
+### undefined
+undefined는 데이터형에 속하지만, 데이터형이라기보다는 현재 변수의 데이터 상태를 알려주는 역할  
+변수 선언은 했지만, 현재 가지고 있는 데이터가 없는 상태
+```html
+<script>
+    var num;
+    console.log(num); // undefined
+</script>
+```
+
+### null
+변수에 저장된 값이 유효하지 않은 상태  
+```html
+<script>
+    var num = null;
+    console.log(num); // null
+</script>
+```
+
+## 백틱(`) 사용법
+여러 데이터 형을 결합이나 연산자로 이용하는 대신 문자열에 수식을 끼어 사용하는 방법
+```html
+<script>
+    var num1 = 5;
+    var num2 = 6;
+    var sum1 = `합은 ${num1 + num2}입니다.`;
+    console.log(sum1); // 합은 11입니다.
+</script>
+```
+
+## 제어문
+조건에 따라 실행 순서를 바꾸거나 반복적인 실행을 하도록 프로그램의 흐름을 제어하는 문장
+
+### 조건문
+조건식에 나오는 결괏값이 true, false에 따라 실행문을 제어하는 경우
+
+#### if문
+조건식의 값이 true일 경우 실행문을 실행
+```html
+<script>
+    var num = prompt("숫자 입력:")
+    if (num < 10) {
+        document.write("num은 10보다 작다.");
+    }
+</script>
+```
+
+#### if-else문
+조건식의 값이 true 값일 경우 또는 false 값일 경우에 실행문이 다를 경우
+```html
+<script>
+    var age = prompt("나이 입력:")
+    if (age > 20 && age < 40) {
+        document.write("입장");
+    } else {
+        document.write("입장 불가");
+    }
+</script>
+```
+
+#### if-else if문
+```html
+<script>
+    var score = 85;
+
+    if (score >= 90) {
+        console.log("A학점");
+    } else if (score >= 80) {
+        console.log("B학점"); // 85는 B학점 출력
+    } else {
+        console.log("C학점");
+    }
+</script>
+```
+
+#### switch문
+다양한 조건이 제시되었을 때 선택된 값에 따라 실행문을 선택하여 실행하도록 하는 제어문  
+여러 조건이 많은 경우 if ~else문 보다 switch문이 더 효과적
+```html
+<script>
+    var classRoom = prompt("학년 입력: ");
+
+    switch (classRoom) {
+        case '1': {
+            document.write('1층');
+        }
+        case '2': {
+            document.write('2층');
+        }
+        case '3': {
+            document.write('3층');
+        }
+        default: {
+            document.write('별관');
+        }
+    }
+</script>
+```
+
+### 반복문
+같은 원리를 가진 실행문을 조건이 성립될 때까지 반복적으로 실행하도록 하는 제어문
+
+#### for문
+실행하고자 하는 실행문이 반복적으로 진행할 수 있는 조건을 외부에서가 아닌 for문에서 설정 가능
+```html
+<script>
+    for(let i=1; i<10; i++) {
+        document.write(i+', ');
+    }
+    document.write('end');
+</script>
+```
+
+```html
+<script>
+    var hap = 0;
+
+    for(let i=1; i<=100; i++) {
+        hap += i;
+    }
+    
+    document.write('1부터 100까지 더한 값: ' + hap);
+</script>
+```
+
+```html
+<script>
+    for(let i=1; i<=9; i++) {
+        document.write(i + '단<br>');
+        for(let j=1; j<=9; j++) {
+            document.write(`${i} x ${j} = ${i*j}<br>`);
+        }
+        document.write('<br>');
+    }
+</script>
+```
+
+#### while문
+반복문 외부에서 기준의 값을 가져와 특정한 조건이 달성될 때가지 실행문이 반복된다.
+```html
+<script>
+    var num = 10;
+    while(num >= 0) {
+        document.write(num + '<br>');
+        num--;
+    }
+</script>
+```
+
+#### do-while문
+while문과 다른 점은 조건이 참이 아닌 경우라도 무조건 한 번 실행문이 실행된다.
+```html
+<script>
+    var num = -10;
+    do {
+        document.write(num + '<br>');
+        num--;
+    }
+    while(num >= 0) {
+    }
+</script>
+```
+
+#### continue문
+현재 사용하고 있는 루프 반복에서 명령문의 실행을 종료하고 반복문의 처음으로 돌아가서 다시 반복문을 실행하게 됨
+```html
+<script>
+    let num;
+
+    for(num=1; num<=10; num++) {
+        if(num == 3) {
+            continue;
+        }
+        document.write(num, ", ")
+    }
+</script>
+```
+
+#### break문
+루프의 실행을 완전히 종료.
+```html
+<script>
+    let num;
+
+    for(num=1; num<=10; num++) {
+        if(num == 3) {
+            break;
+        }
+        document.write(num, ", ")
+    }
+</script>
+```
+
+## 함수
+자주 사용하는 기능이 있다면 그 기능을 등록해 놓으면 매번 그 기능을 작성하지 않아도 사용할 수 있다.  
+프로그램의 정리가 간결하고 기능별로 시작과 끝점을 구분하여 정리할 수 있어 충돌의 위험이 없어짐.  
+함수는 사용환경에 따라 `내장함수`와 `사용자 정의 함수`로 나눌 수 있다.
+
+### 내장함수
+`document()`, `write()`, `alert()`, `prompt()` 등과 같이 메소드라 불리던 명령어들이 내장함수로 브라우저에 내장되어 있다.
+
+### 사용자 정의 함수
+사용자가 자신이 만들고 있는 프로그램의 편의를 위해 만들어 사용하는 함수.  
+함수는 만드는 방법과 사용법에 따라 `이름 있는 함수`, **이름 없는 함수**, **함수식**이 있다.
+```html
+<script>
+    function line(str) {
+        for (let i=1; i<=20; i++) {
+            document.write(str);
+        }
+        document.write('end<br>');
+    }
+
+    line('*');
+    line('&');
+    line('@');
+</script>
+```
+
