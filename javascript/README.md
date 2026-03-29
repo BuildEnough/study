@@ -453,3 +453,165 @@ while문과 다른 점은 조건이 참이 아닌 경우라도 무조건 한 번
 </script>
 ```
 
+### 매개변수
+사용자 정의 함수를 사용할 때 함수의 이름만 불러 필요한 기능을 실행시키는 것뿐 아니라 기능을 실행하기 위해 데이터가 필요할 때가 있다.  
+함수를 만들어 사용하고자 할 때 데이터가 필요한 경우, 데이터를 같이 전달하여 함수를 호출하는 통로를 매개변수, 인수라고 함.
+
+- 버튼을 클릭하여 함수를 불러들이는 방법
+    ```html
+    <script>
+        function flower(flowerName) {
+            switch(flowerName) {
+                case '무궁화': alert('무궁화 추천');
+                break;
+                case '장미': alert('장미 추천');
+                break;
+                case '국화': alert('국화 추천');
+                break;
+            }
+        }
+    </script>
+    <button type="button" onclick="flower('무궁화')"></button>
+    <button type="button" onclick="flower('장미')"></button>
+    <button type="button" onclick="flower('국화')"></button>
+    ```
+
+### return 문
+함수에서 결괏값을 함수 밖으로 넘기는 역할.  
+return 문이 실행되는 위치를 항상 함수 실행문의 가장 마지막에 사용하여 함수의 결괏값을 외부로 반환한 후 프로그램의 포커스를 함수 밖으로 나오게 함.  
+return 문이 함수 실행문 중간에 나오게 되면 return 문 다음에 오는 실행문은 실행이 되지 않는 상태에서 함수가 끝나게 됨.
+
+```html
+<script>
+    var first = 13;
+    var last = 7;
+
+    var result = all(first, last);
+    console.log(result);
+
+    function all(a, b) {
+        var sam = a + b;
+        return sam;
+    }
+</script>
+```
+
+### 스코프
+전역변수: 프로그램 전역에서 모두 사용 가능한 변수.  
+지역변수: 변수가 만들어진 지역 안에서만 사용 가능한 변수.
+```html
+<script>
+    var num = 1;
+
+    function love() {
+        var a = num + 1;
+        console.log(a);
+    }
+
+    love(); // 2
+    console.log(num); // 1
+</script>
+```
+
+#### 함수 안에서 변수 만들기
+함수 안에서 전역변수를 만들 경우 `var`라는 명령어를 빼고 변수를 선언하면 됨.  
+함수 안에서 전역적으로 쓸 수 있는 변수를 만들 수 있지만, 함수를 한 번이라도 사용하여야만 가능.
+```html
+<script>
+    function love(){
+        str ='산';     // 전역변수
+        var sum ='강'; // 지역변수
+        document.write('함수내에서 출력 ', str,'<br>'); // 한 번 사용해야 함수 밖에서 사용 가능
+        document.write('함수내에서 출력 ', sum,'<br>');
+        return str;
+    }
+
+    love();
+    document.write(str,'<br>');
+    // document.write(sum,'<br>');
+</script>
+```
+
+### 이름 있는 함수
+function이라는 명령어를 사용해서 함수 이름을 선언하고, 인수에서 필요한 데이터를 보내 함수 선언에 있는 매개변수에서 그 데이터를 받아 사용할 수 있는 함수.
+```html
+<script>
+    function all(a, b) {
+        var result;
+        result = a>b? console.log('a가 큽니다.') : console.log('b가 큽니다');
+    return result;
+    }
+
+    var first = 13;
+    var last = 7;
+
+    all(first, last);
+</script>
+```
+
+### 익명 함수
+이름이 없이 함수를 선언하여 하나의 식처럼 변수에 해당하는 함수의 값을 제공하여 사용하는 방법
+```html
+<script>
+    var all = function(a,b) {
+        var result;
+        a>b ? result = 'a' : result = 'b';
+        return result;
+    }
+    console.log(all(7,10));
+</script>
+```
+
+### 즉시 실행 함수식
+정의된 함수와 함께 실행하여 즉시 그 결괏값을 받아 사용하는 방법
+```html
+<script>
+    var first = 5;
+    var last = 7;
+    
+    var all = (function(a,b){
+        var result;
+        a>b ? result = 'a가크다' : result = 'b가크다';
+    return result;
+    })(first,last)
+
+    console.log(all);
+</script>
+```
+
+### 화살표 함수
+기존의 함수를 훨씬 간단하게 표현할 수 있게 만든 함수.  
+재사용하지 않는 이름 없는 함수인 경우 function 이라는 키워드 없이 `=>`를 이용해 함수를 생성하는 방법.
+
+#### 매개변수 없는 경우
+매개변수가 없는 경우는 `()`를 생략할 수 없다.
+```html
+<script>
+    const main1 = () => {
+        console.log('main1');
+    }
+    main1();
+</script>
+```
+
+#### 매개변수 1개인 경우
+매개변수가 1개인 경우에는 `()`를 생략 가능.
+```html
+<script>
+    const main2 = a => {
+        console.log(a);
+    }
+    main2('welcome');
+</script>
+```
+
+#### 매개변수가 여러 개인 경우
+`()` 생략하지 않는다.
+```html
+<script>
+    const main3 = (a,b) => {
+        console.log(a + b);
+    }
+    main3(5, 10);
+</script>
+```
