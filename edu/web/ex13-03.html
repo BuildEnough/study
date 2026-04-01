@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .box {
+      width: 350px;
+      margin: 50px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .input-area {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    #todoInput {
+      flex: 1;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    #addBtn {
+      padding: 10px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #eeeeee;
+      margin-bottom: 10px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .done {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    button {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h1>Todo List</h1>
+
+    <div class="input-area">
+      <input type="text" id="todoInput" placeholder="할 일을 입력하세요">
+      <button id="addBtn">추가</button>
+    </div>
+
+    <ul id="todoList"></ul>
+  </div>
+
+  <script>
+    const todoInput = document.getElementById("todoInput");
+    const addBtn = document.getElementById("addBtn");
+    const todoList = document.getElementById("todoList");
+
+    addBtn.addEventListener("click", function () {
+      const text = todoInput.value;
+
+      if (text.trim() === "") {
+        alert("할 일을 입력하세요");
+        return;
+      }
+
+      const li = document.createElement("li");
+
+      const leftDiv = document.createElement("div");
+      leftDiv.className = "left";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+
+      const span = document.createElement("span");
+      span.innerText = text;
+
+      checkbox.addEventListener("change", function () {
+        if (checkbox.checked) {
+          span.classList.add("done");
+        } else {
+          span.classList.remove("done");
+        }
+      });
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.innerText = "삭제";
+
+      deleteBtn.addEventListener("click", function () {
+        li.remove();
+      });
+
+      leftDiv.appendChild(checkbox);
+      leftDiv.appendChild(span);
+
+      li.appendChild(leftDiv);
+      li.appendChild(deleteBtn);
+
+      todoList.appendChild(li);
+
+      todoInput.value = "";
+    });
+  </script>
+
+</body>
+</html>

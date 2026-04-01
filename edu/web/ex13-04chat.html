@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>채팅창</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .box {
+        min-height: 100vh;
+        padding: 2rem;
+        background-color: aliceblue;
+        box-sizing: border-box;
+      }
+
+      .chat-container {
+        background-color: white;
+        width: 500px;
+        height: 500px;
+        margin: auto;
+        padding: 1rem 1.5rem 1rem 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        border-radius: 20px;
+        overflow-y: auto;
+        box-sizing: border-box;
+      }
+
+      .message {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 1.2rem;
+      }
+
+      .message.bot {
+        justify-content: flex-start;
+      }
+
+      .message.user {
+        justify-content: flex-end;
+      }
+
+      .name {
+        font-size: 0.8rem;
+        color: #555;
+        margin: 0 10px 2px;
+      }
+
+      .bubble {
+        max-width: 300px;
+        background-color: rgb(212, 212, 211);
+        padding: 0.7rem 1rem;
+        border-radius: 20px;
+        word-break: break-word;
+      }
+
+      .user .bubble {
+        background-color: rgb(255, 255, 122);
+      }
+
+      .user .name {
+        text-align: right;
+      }
+
+      .input-area {
+        width: 500px;
+        margin: 20px auto 0;
+        display: flex;
+        gap: 10px;
+      }
+
+      .input-area input {
+        flex: 1;
+        padding: 10px;
+        font-size: 16px;
+      }
+
+      .input-area button {
+        padding: 10px 15px;
+        cursor: pointer;
+      }
+
+      .btn-area {
+        width: 500px;
+        margin: 10px auto 0;
+        text-align: right;
+      }
+
+      .btn-area button {
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+
+      .chat-container::-webkit-scrollbar {
+        background-color: rgb(240, 246, 255);
+        border-radius: 0 6px 6px 0;
+        width: 10px;
+      }
+
+      .chat-container::-webkit-scrollbar-thumb {
+        background-color: rgb(89, 156, 233);
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>채팅창</h1>
+    <hr />
+    <a href="index.html">홈으로</a><br />
+
+    <div class="box">
+      <!-- 채팅 내용이 들어갈 곳 -->
+      <div class="chat-container" id="chatContainer"></div>
+
+      <!-- 입력창 -->
+      <div class="input-area">
+        <input type="text" id="chatInput" placeholder="메시지를 입력하세요" />
+        <button onclick="sendMessage()">전송</button>
+      </div>
+
+      <!-- 전체 삭제 버튼 -->
+      <div class="btn-area">
+        <button onclick="clearChat()">채팅 전체 삭제</button>
+      </div>
+    </div>
+
+    <script>
+      // 채팅 내용을 저장할 배열
+      let chats = [];
+
+      // 페이지가 열리면 실행
+      window.onload = function () {
+        let savedChats = localStorage.getItem("chatData");
+
+        // 저장된 데이터가 있으면 불러오기
+        if (savedChats) {
+          chats = JSON.parse(savedChats);
+        } else {
+          // 처음 접속했을 때 기본 메시지 넣기
+          chats = [
+            {
+              type: "bot",
+              name: "myBot",
+              text: "안녕하세요! 무엇을 도와드릴까요?",
+            },
+          ];
+          saveChats();
+        }
+
+        // 저장된 채팅 화면에 출력
+        renderChats();
+      };
+
+      // localStorage에 저장하는 함수
+      function saveChats() {
+        localStorage.setItem("chatData", JSON.stringify(chats));
+      }
+
+      // 채팅 하나를 만드는 함수
+      function createMessage(type, name, text) {
+        // 가장 바깥쪽 message div 만들기
+        let message = document.createElement("div");
+        message.classList.add("message");
+        message.classList.add(type);
+
+        // 안쪽 감싸는 div
+        let inner = document.createElement("div");
+
+        // 이름 div
+        let nameDiv = document.createElement("div");
+        nameDiv.classList.add("name");
+        nameDiv.innerText = name;
+
+        // 말풍선 div
+        let bubbleDiv = document.createElement("div");
+        bubbleDiv.classList.add("bubble");
+        bubbleDiv.innerText = text;
+
+        // 조립
+        inner.appendChild(nameDiv);
+        inner.appendChild(bubbleDiv);
+
+        message.appendChild(inner);
+
+        return message;
+      }
+
+      // 채팅 전체를 다시 화면에 그리는 함수
+      function renderChats() {
+        let chatContainer = document.getElementById("chatContainer");
+
+        // 기존 화면 비우기
+        chatContainer.innerHTML = "";
+
+        // 배열 안에 있는 채팅을 하나씩 화면에 추가
+        for (let i = 0; i < chats.length; i++) {
+          let msg = createMessage(chats[i].type, chats[i].name, chats[i].text);
+          chatContainer.appendChild(msg);
+        }
+
+        // 항상 맨 아래로 스크롤
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+
+      // 전송 버튼 눌렀을 때 실행
+      function sendMessage() {
+        let input = document.getElementById("chatInput");
+        let text = input.value.trim();
+
+        // 빈칸이면 막기
+        if (text === "") {
+          alert("메시지를 입력하세요");
+          return;
+        }
+
+        // 사용자 메시지 추가
+        chats.push({
+          type: "user",
+          name: "나",
+          text: text,
+        });
+
+        // 간단한 봇 답변도 같이 추가
+        chats.push({
+          type: "bot",
+          name: "myBot",
+          text: "메시지를 잘 받았습니다: " + text,
+        });
+
+        // 저장
+        saveChats();
+
+        // 다시 그리기
+        renderChats();
+
+        // 입력창 비우기
+        input.value = "";
+      }
+
+      // 엔터키로도 전송 가능하게 만들기
+      document
+        .getElementById("chatInput")
+        .addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            sendMessage();
+          }
+        });
+
+      // 전체 채팅 삭제
+      function clearChat() {
+        let check = confirm("채팅 내용을 모두 삭제하시겠습니까?");
+
+        if (check) {
+          chats = [
+            {
+              type: "bot",
+              name: "myBot",
+              text: "안녕하세요! 무엇을 도와드릴까요?",
+            },
+          ];
+
+          saveChats();
+          renderChats();
+        }
+      }
+    </script>
+  </body>
+</html>

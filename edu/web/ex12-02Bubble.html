@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>버블 차트</title>
+  </head>
+  <body>
+    <div>
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      const ctx = document.getElementById("myChart");
+
+      const dayLabels = ["월", "화", "수", "목", "금", "토", "일"];
+
+      const data = {
+        datasets: [
+          {
+            label: "My First Dataset",
+            data: [
+              { x: 1, y: 35, r: 10 },
+              { x: 2, y: 60, r: 15 },
+              { x: 3, y: 45, r: 12 },
+              { x: 4, y: 80, r: 20 },
+              { x: 5, y: 25, r: 8 },
+              { x: 6, y: 70, r: 18 },
+              { x: 7, y: 50, r: 14 }
+            ],
+            backgroundColor: "rgba(255, 99, 132, 0.5)"
+          }
+        ]
+      };
+
+      const config = {
+        type: "bubble",
+        data: data,
+        options: {
+          scales: {
+            x: {
+              beginAtZero: false,
+              min: 1,
+              max: 7,
+              ticks: {
+                stepSize: 1,
+                callback: function(value) {
+                  return dayLabels[value - 1];
+                }
+              }
+            },
+            y: {
+              beginAtZero: true,
+              max: 100
+            }
+          }
+        }
+      };
+
+      new Chart(ctx, config);
+    </script>
+  </body>
+</html>

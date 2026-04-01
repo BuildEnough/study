@@ -1,0 +1,44 @@
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+
+  </head>
+  <body>
+    <div class="scroll-text" id="scrollText">
+      첫 단계에요. 스크롤을 내려보세요.
+    </div>
+    <section>1단계</section>
+    <section>2단계</section>
+    <section>3단계</section>
+    <section>4단계</section>
+    <section>End Line</section>
+    <script>
+      const scrollText = document.getElementById("scrollText");
+
+      window.addEventListener("scroll", () => {
+        const scrollY = window.scrollY;
+        console.log(scrollY);
+        /* 스크롤 위치에 따른 텍스트를 변경 */
+        if (scrollY > 100 && scrollY <= 800) {
+          scrollText.textContent = "지금은 1단계 입니다.";
+        }
+        if (scrollY > 800 && scrollY <= 1600) {
+          scrollText.textContent = "지금은 2단계 입니다.";
+        }
+        if (scrollY > 1600 && scrollY <= 2400) {
+          scrollText.textContent = "지금은 3단계 입니다.";
+        }
+        if (scrollY > 2400 && scrollY <= 3400) {
+          scrollText.textContent = "지금은 4단계 입니다.";
+        }
+        if (scrollY > 3400) {
+          scrollText.textContent = "마지막 구간입니다.";
+        }
+      });
+    </script>
+  </body>
+</html>
