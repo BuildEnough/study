@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello, world</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row">
+    
+          <!-- <div class="col-sm-4">
+            <img src="https://via.placeholder.com/600" class="w-100">
+            <h5>Card title</h5>
+            <p>가격 : 70000</p>
+          </div> -->
+    
+      </div>
+    </div>
+    
+    <div class="container my-3">
+      <button class="btn btn-danger" id="price">가격순 정렬</button>
+    </div>
+
+    <div class="container my-3">
+      <button class="btn btn-danger" id="sort1">다나가순 정렬</button>
+    </div>
+
+    <div class="container my-3">
+      <button class="btn btn-danger" id="filter">6만 원이하</button>
+    </div>
+    
+    <script>
+      var products = [
+        { id : 0, price : 70000, title : 'Blossom Dress' },
+        { id : 1, price : 50000, title : 'Springfield Shirt' },
+        { id : 2, price : 60000, title : 'Black Monastery' }
+      ];
+
+      $('#filter').click(function() {
+        var newProduct = products.filter(function(a) {
+          return a.price <= 60000;
+        });
+
+      $('.row').html('');
+  
+      newProduct.forEach((a, i)=>{
+        var 템플릿 = 
+        `<div class="col-sm-4">
+          <img src="https://via.placeholder.com/600" class="w-100">
+          <h5>${newProduct[i].title}</h5>
+          <p>가격 : ${newProduct[i].price}</p>
+          </div>`;
+          $('.row').append(템플릿)
+        });
+      });
+
+      $("#sort1").click(function() {
+        products.sort(function(a, b) {
+          if (a.title < b.title) {
+            return 1;
+          } else {
+            return -1;
+          }
+        });
+      });
+
+
+      $('#price').click(function() {
+        products.sort(function(a, b){
+          return a.price - b.price;
+        });
+
+      $('.row').html('');
+  
+      products.forEach((a, i)=>{
+        var 템플릿 = 
+        `<div class="col-sm-4">
+          <img src="https://via.placeholder.com/600" class="w-100">
+          <h5>${products[i].title}</h5>
+          <p>가격 : ${products[i].price}</p>
+          </div>`;
+          $('.row').append(템플릿)
+        });
+      });
+
+      var 변수 = 0;
+      
+      products.forEach((a, i)=>{
+        var 템플릿 = 
+        `<div class="col-sm-4">
+          <img src="https://via.placeholder.com/600" class="w-100">
+          <h5>${products[i].title}</h5>
+          <p>가격 : ${products[i].price}</p>
+          <button class="buy">구매</button>
+          </div>`;
+          $('.row').append(템플릿)
+        });
+
+        $('.buy').click(function(e) {
+          var title = $(e.target).siblings('h5').text();
+
+          if(localStorage.getItem('cart') != null) {
+            var 꺼낸거 = JSON.parse(localStorage.cart);
+            꺼낸거.push(title);
+            localStorage.setItem('cart', JSON.stringify(꺼낸거));
+
+          } else {
+            localStorage.setItem('cart', JSON.stringify([title]));
+          }
+
+        });
+
+        
+      </script> 
+      
+      <div class="container">
+        <button class="btn btn-danger" id="more">더보기</button>
+      </div>
+
+      <script>
+
+        $('#more').click(function() {
+          $.get('https://codingapple1.github.io/js/more1.json')
+          .done((data)=> {
+            console.log(data);
+
+            data.forEach((a, i)=>{
+              var 템플릿 = 
+                `<div class="col-sm-4">
+                  <img src="https://via.placeholder.com/600" class="w-100">
+                  <h5>${data[i].title}</h5>
+                  <p>가격 : ${data[i].price}</p>
+                  </div>`;
+                  $('.row').append(템플릿)
+            });
+
+          });
+        });
+
+      </script>
+      
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </body>
+    </html>
