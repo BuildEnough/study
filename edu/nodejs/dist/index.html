@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>웹 실습 인덱스</title>
+    <style>
+        :root {
+            --bg1: #eef4ff;
+            --bg2: #f8fbff;
+            --primary: #4f46e5;
+            --primary-dark: #312e81;
+            --accent: #06b6d4;
+            --text: #1f2937;
+            --subtext: #6b7280;
+            --card-bg: rgba(255, 255, 255, 0.82);
+            --card-border: rgba(255, 255, 255, 0.55);
+            --shadow: 0 18px 40px rgba(79, 70, 229, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Malgun Gothic", "맑은 고딕", "Segoe UI", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(79, 70, 229, 0.12), transparent 30%),
+                radial-gradient(circle at top right, rgba(6, 182, 212, 0.14), transparent 28%),
+                linear-gradient(135deg, var(--bg1), var(--bg2));
+            min-height: 100vh;
+        }
+
+        .wrap {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 36px 20px 70px;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px;
+            padding: 46px 32px;
+            background: linear-gradient(135deg, #4338ca, #06b6d4);
+            color: white;
+            box-shadow: 0 22px 45px rgba(67, 56, 202, 0.28);
+            margin-bottom: 30px;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .hero::before {
+            width: 240px;
+            height: 240px;
+            top: -80px;
+            right: -60px;
+        }
+
+        .hero::after {
+            width: 150px;
+            height: 150px;
+            bottom: -45px;
+            left: -25px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            margin-bottom: 16px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(8px);
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            margin: 12px 0 0;
+            font-size: 1.02rem;
+            opacity: 0.95;
+        }
+
+        .notice {
+            margin-top: 18px;
+            padding: 14px 16px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 12px;
+            margin: 10px 0 20px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            font-size: 1.45rem;
+        }
+
+        .section-title p {
+            margin: 0;
+            color: var(--subtext);
+            font-size: 0.95rem;
+        }
+
+        .day-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 22px;
+        }
+
+        .day-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .day-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 26px 44px rgba(79, 70, 229, 0.17);
+            border-color: rgba(79, 70, 229, 0.18);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .card-top h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+        }
+
+        .count {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(79, 70, 229, 0.08);
+            white-space: nowrap;
+        }
+
+        .examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .examples a {
+            text-decoration: none;
+            color: var(--primary-dark);
+            background: linear-gradient(135deg, #ffffff, #eef2ff);
+            border: 1px solid #dbe3ff;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 14px rgba(79, 70, 229, 0.06);
+        }
+
+        .examples a:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 12px 20px rgba(79, 70, 229, 0.24);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 42px;
+            color: var(--subtext);
+            font-size: 0.92rem;
+        }
+
+        @media (max-width: 768px) {
+            .wrap {
+                padding: 24px 16px 50px;
+            }
+
+            .hero {
+                padding: 34px 22px;
+                border-radius: 24px;
+            }
+
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .examples a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .day-card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header class="hero">
+            <div class="hero-content">
+                <div class="badge">BuildEnough / study / edu / web</div>
+                <h1>웹 실습 인덱스</h1>
+                <p>실제 파일명을 기준으로 정리한 HTML 실습 모음 페이지</p>
+            </div>
+        </header>
+
+        <section class="section-title">
+            <h2>실습 파일 목록</h2>
+            <p>파일명을 클릭하면 해당 예제로 이동합니다.</p>
+        </section>
+
+        <main class="day-list" id="dayList"></main>
+
+        <footer>
+        </footer>
+    </div>
+
+<script>
+    const practiceData = {
+        "1일차": [
+            "ex01-01.html", "ex01-02.html", "ex01-03.html", "ex01-04.html",
+            "ex01-05.html", "ex01-06.html", "ex01-07.html"
+        ],
+        "2일차": [
+            "ex02-01.html", "ex02-02.html", "ex02-02a.html", "ex02-03.html",
+            "ex02-04.html", "ex02-05.html", "ex02-06.html", "ex02-07.html",
+            "ex02-08.html", "ex02-09.html", "ex02-10.html", "ex02-11.html"
+        ],
+        "3일차": [
+            "ex03-01.html", "ex03-02.html", "ex03-03.html", "ex03-04.html",
+            "ex03-05.html", "ex03-06.html", "ex03-07.html", "ex03-08.html",
+            "ex03-09.html", "ex03-10.html", "ex03-11.html", "ex03-12.html"
+        ],
+        "4일차": [
+            "ex04-01.html", "ex04-02.html", "ex04-03.html", "ex04-04.html",
+            "ex04-05.html", "ex04-06.html", "ex04-07.html", "ex04-08.html",
+            "ex04-09.html", "ex04-10.html", "ex04-11.html", "ex04-12.html",
+            "ex04-13.html", "ex04-14.html", "ex04-15.html", "ex04-16.html",
+            "ex04-17.html"
+        ],
+        "5일차": [
+            "ex05-01.html", "ex05-02.html", "ex05-03.html", "ex05-04.html",
+            "ex05-05.html", "ex05-06.html", "ex05-07.html", "ex05-08.html",
+            "ex05-09.html", "ex05-10.html"
+        ],
+        "6일차": [
+            "ex06-01.html", "ex06-02.html", "ex06-03.html", "ex06-04.html",
+            "ex06-05.html", "ex06-06.html", "ex06-07.html", "ex06-08.html",
+            "ex06-09.html", "ex06-10.html", "ex06-10a.html", "ex06-11.html",
+            "ex06-12.html", "ex06-13.html", "ex06-14.html", "ex06-15.html",
+            "ex06-16.html", "ex06-17.html"
+        ],
+        "7일차": [
+            "ex07-01.html", "ex07-01a.html", "ex07-02.html", "ex07-03.html",
+            "ex07-04.html", "ex07-05.html", "ex07-06.html", "ex07-07.html",
+            "ex07-08.html", "ex07-09.html", "ex07-10.html", "ex07-10a.html",
+            "ex07-11.html", "ex07-12.html", "ex07-13.html"
+        ],
+        "8일차": [
+            "ex08-01.html", "ex08-02.html", "ex08-02a.html", "ex08-03.html",
+            "ex08-04.html", "ex08-05.html", "ex08-06.html", "ex08-07.html",
+            "ex08-08.html", "ex08-09.html", "ex08-10.html", "ex08-11.html",
+            "ex08-12.html", "ex08-13.html"
+        ],
+        "9일차": [
+            "ex09-01.html",
+            "ex09-06.html", "ex09-07.html", "ex09-08.html", "ex09-09.html",
+            "ex09-10.html", "ex09-11.html", "ex09-12.html"
+        ],
+        "10일차": [
+            "ex10-01.html", "ex10-02.html", "ex10-03.html", "ex10-04.html",
+            "ex10-05.html", "ex10-06.html", "ex10-07.html", "ex10-07a.html",
+            "ex10-07b.html", "ex10-08.html", "ex10-09.html", "ex10-10.html",
+            "ex10-11.html", "ex10-11a.html", "ex10-11b.html", "ex10-11c.html"
+        ],
+        "11일차": [
+            "ex11-01.html", "ex11-02.html", "ex11-03.html", "ex11-04.html",
+            "ex11-05.html", "ex11-06.html", "ex11-07.html", "ex11-08.html",
+            "ex11-09.html", "ex11-10.html", "ex11-11.html", "ex11-11a.html",
+            "ex11-11b.html", "ex11-11c.html", "ex11-12.html", "ex11-13.html",
+            "ex11-14.html", "ex11-15.html"
+        ],
+        "12일차": [
+            "ex12-01.html", "ex12-02.html", "ex12-02Bubble.htm", "ex12-02Line.html",
+            "ex12-03.html", "ex12-04.html", "ex12-05.html", "ex12-05a.html",
+            "ex12-06.html", "ex12-06a.html", "ex12-06b.html", "ex12-06c.html",
+            "ex12-06d.html", "ex12-06e.html", "ex12-07.html", "ex12-07a.html",
+            "ex12-07b.html"
+        ],
+        "13일차": [
+            "ex13-01.html", "ex13-02.html", "ex13-03.html", "ex13-04chat.html",
+            "ex13-04crud.html"
+        ]
+    };
+
+    const dayList = document.getElementById("dayList");
+
+    Object.entries(practiceData).forEach(([day, files]) => {
+        const card = document.createElement("section");
+        card.className = "day-card";
+
+        const top = document.createElement("div");
+        top.className = "card-top";
+
+        const title = document.createElement("h3");
+        title.textContent = day;
+
+        const count = document.createElement("span");
+        count.className = "count";
+        count.textContent = `${files.length}개`;
+
+        top.appendChild(title);
+        top.appendChild(count);
+
+        const examples = document.createElement("div");
+        examples.className = "examples";
+
+        files.forEach(file => {
+            const link = document.createElement("a");
+            link.href = "/edu/web/" + file;
+            link.textContent = file;
+            examples.appendChild(link);
+        });
+
+        card.appendChild(top);
+        card.appendChild(examples);
+        dayList.appendChild(card);
+    });
+</script>
+</body>
+</html>
