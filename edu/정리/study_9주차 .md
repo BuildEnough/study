@@ -59,3 +59,10 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 ```
+
+## 2026-04-02(41일차)
+### nodejs로 서버
+
+### Axios 시간되면 해보라고 함
+
+### 퀴즈 마지막 시간

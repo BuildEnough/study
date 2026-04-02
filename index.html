@@ -1,375 +1,359 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>웹 실습 인덱스</title>
-    <style>
-        :root {
-            --bg1: #eef4ff;
-            --bg2: #f8fbff;
-            --primary: #4f46e5;
-            --primary-dark: #312e81;
-            --accent: #06b6d4;
-            --text: #1f2937;
-            --subtext: #6b7280;
-            --card-bg: rgba(255, 255, 255, 0.82);
-            --card-border: rgba(255, 255, 255, 0.55);
-            --shadow: 0 18px 40px rgba(79, 70, 229, 0.12);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BuildEnough Study</title>
+  <meta name="description" content="주제별로 공부한 내용을 정리한 저장소입니다." />
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --card: #ffffff;
+      --text: #1f2328;
+      --sub: #59636e;
+      --line: #d0d7de;
+      --primary: #0969da;
+      --primary-hover: #0550ae;
+      --shadow: 0 8px 24px rgba(31, 35, 40, 0.08);
+      --radius: 18px;
+      --max: 1100px;
+    }
 
-        * {
-            box-sizing: border-box;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            margin: 0;
-            font-family: "Malgun Gothic", "맑은 고딕", "Segoe UI", sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at top left, rgba(79, 70, 229, 0.12), transparent 30%),
-                radial-gradient(circle at top right, rgba(6, 182, 212, 0.14), transparent 28%),
-                linear-gradient(135deg, var(--bg1), var(--bg2));
-            min-height: 100vh;
-        }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+      background: linear-gradient(to bottom, #f7f8fa, #eef2f6);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-        .wrap {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 36px 20px 70px;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        .hero {
-            position: relative;
-            overflow: hidden;
-            border-radius: 28px;
-            padding: 46px 32px;
-            background: linear-gradient(135deg, #4338ca, #06b6d4);
-            color: white;
-            box-shadow: 0 22px 45px rgba(67, 56, 202, 0.28);
-            margin-bottom: 30px;
-        }
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
 
-        .hero::before,
-        .hero::after {
-            content: "";
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.12);
-        }
+    .hero {
+      padding: 72px 0 36px;
+    }
 
-        .hero::before {
-            width: 240px;
-            height: 240px;
-            top: -80px;
-            right: -60px;
-        }
+    .hero-box {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 40px 32px;
+    }
 
-        .hero::after {
-            width: 150px;
-            height: 150px;
-            bottom: -45px;
-            left: -25px;
-        }
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
 
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #eaf2ff;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 600;
+    }
 
-        .badge {
-            display: inline-block;
-            margin-bottom: 16px;
-            padding: 8px 14px;
-            border-radius: 999px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            background: rgba(255, 255, 255, 0.16);
-            backdrop-filter: blur(8px);
-        }
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.15;
+    }
 
-        .hero h1 {
-            margin: 0;
-            font-size: clamp(2rem, 4vw, 3rem);
-            line-height: 1.2;
-        }
+    .hero p {
+      margin: 0;
+      color: var(--sub);
+      font-size: 17px;
+    }
 
-        .hero p {
-            margin: 12px 0 0;
-            font-size: 1.02rem;
-            opacity: 0.95;
-        }
+    .hero-actions {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
 
-        .notice {
-            margin-top: 18px;
-            padding: 14px 16px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.14);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
 
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-            gap: 12px;
-            margin: 10px 0 20px;
-        }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
 
-        .section-title h2 {
-            margin: 0;
-            font-size: 1.45rem;
-        }
+    .btn.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
 
-        .section-title p {
-            margin: 0;
-            color: var(--subtext);
-            font-size: 0.95rem;
-        }
+    .btn.primary:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
 
-        .day-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 22px;
-        }
+    .section {
+      padding: 24px 0 64px;
+    }
 
-        .day-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 22px;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(12px);
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-        }
+    .section-head {
+      margin-bottom: 20px;
+    }
 
-        .day-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 26px 44px rgba(79, 70, 229, 0.17);
-            border-color: rgba(79, 70, 229, 0.18);
-        }
+    .section-head h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
 
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 18px;
-        }
+    .section-head p {
+      margin: 0;
+      color: var(--sub);
+    }
 
-        .card-top h3 {
-            margin: 0;
-            font-size: 1.25rem;
-            color: var(--primary-dark);
-        }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat( auto-fit, minmax(240px, 1fr) );
+      gap: 18px;
+    }
 
-        .count {
-            display: inline-block;
-            padding: 7px 12px;
-            border-radius: 999px;
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: var(--primary);
-            background: rgba(79, 70, 229, 0.08);
-            white-space: nowrap;
-        }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 210px;
+    }
 
-        .examples {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
 
-        .examples a {
-            text-decoration: none;
-            color: var(--primary-dark);
-            background: linear-gradient(135deg, #ffffff, #eef2ff);
-            border: 1px solid #dbe3ff;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 0.92rem;
-            font-weight: 700;
-            transition: all 0.2s ease;
-            box-shadow: 0 6px 14px rgba(79, 70, 229, 0.06);
-        }
+    .card h3 {
+      margin: 0;
+      font-size: 22px;
+    }
 
-        .examples a:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 12px 20px rgba(79, 70, 229, 0.24);
-        }
+    .tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      background: #eaf2ff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
 
-        footer {
-            text-align: center;
-            margin-top: 42px;
-            color: var(--subtext);
-            font-size: 0.92rem;
-        }
+    .card p {
+      margin: 0;
+      color: var(--sub);
+      font-size: 15px;
+      flex: 1;
+    }
 
-        @media (max-width: 768px) {
-            .wrap {
-                padding: 24px 16px 50px;
-            }
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
 
-            .hero {
-                padding: 34px 22px;
-                border-radius: 24px;
-            }
+    .card-actions a {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+    }
 
-            .section-title {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
+    .footer {
+      padding: 12px 0 48px;
+      color: var(--sub);
+      font-size: 14px;
+      text-align: center;
+    }
 
-        @media (max-width: 480px) {
-            .examples a {
-                width: 100%;
-                text-align: center;
-            }
+    @media (max-width: 640px) {
+      .hero-box {
+        padding: 28px 20px;
+      }
 
-            .day-card {
-                padding: 18px;
-            }
-        }
-    </style>
+      .card {
+        min-height: auto;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="wrap">
-        <header class="hero">
-            <div class="hero-content">
-                <div class="badge">BuildEnough / study / edu / web</div>
-                <h1>웹 실습 인덱스</h1>
-                <p>실제 파일명을 기준으로 정리한 HTML 실습 모음 페이지</p>
-            </div>
-        </header>
+  <header class="hero">
+    <div class="container">
+      <div class="hero-box">
+        <div class="badge-row">
+          <span class="badge">Java</span>
+          <span class="badge">Python</span>
+          <span class="badge">JavaScript</span>
+          <span class="badge">Spring</span>
+          <span class="badge">React</span>
+          <span class="badge">Git</span>
+          <span class="badge">Computer Science</span>
+        </div>
 
-        <section class="section-title">
-            <h2>실습 파일 목록</h2>
-            <p>파일명을 클릭하면 해당 예제로 이동합니다.</p>
-        </section>
+        <h1>BuildEnough Study</h1>
+        <p>주제별로 공부한 내용을 정리한 저장소</p>
 
-        <main class="day-list" id="dayList"></main>
-
-        <footer>
-        </footer>
+        <div class="hero-actions">
+          <a class="btn primary" href="https://github.com/BuildEnough/study" target="_blank" rel="noopener noreferrer">
+            GitHub Repository
+          </a>
+          <a class="btn" href="https://github.com/BuildEnough/study/blob/master/README.md" target="_blank" rel="noopener noreferrer">
+            README
+          </a>
+        </div>
+      </div>
     </div>
+  </header>
 
-<script>
-    const practiceData = {
-        "1일차": [
-            "ex01-01.html", "ex01-02.html", "ex01-03.html", "ex01-04.html",
-            "ex01-05.html", "ex01-06.html", "ex01-07.html"
-        ],
-        "2일차": [
-            "ex02-01.html", "ex02-02.html", "ex02-02a.html", "ex02-03.html",
-            "ex02-04.html", "ex02-05.html", "ex02-06.html", "ex02-07.html",
-            "ex02-08.html", "ex02-09.html", "ex02-10.html", "ex02-11.html"
-        ],
-        "3일차": [
-            "ex03-01.html", "ex03-02.html", "ex03-03.html", "ex03-04.html",
-            "ex03-05.html", "ex03-06.html", "ex03-07.html", "ex03-08.html",
-            "ex03-09.html", "ex03-10.html", "ex03-11.html", "ex03-12.html"
-        ],
-        "4일차": [
-            "ex04-01.html", "ex04-02.html", "ex04-03.html", "ex04-04.html",
-            "ex04-05.html", "ex04-06.html", "ex04-07.html", "ex04-08.html",
-            "ex04-09.html", "ex04-10.html", "ex04-11.html", "ex04-12.html",
-            "ex04-13.html", "ex04-14.html", "ex04-15.html", "ex04-16.html",
-            "ex04-17.html"
-        ],
-        "5일차": [
-            "ex05-01.html", "ex05-02.html", "ex05-03.html", "ex05-04.html",
-            "ex05-05.html", "ex05-06.html", "ex05-07.html", "ex05-08.html",
-            "ex05-09.html", "ex05-10.html"
-        ],
-        "6일차": [
-            "ex06-01.html", "ex06-02.html", "ex06-03.html", "ex06-04.html",
-            "ex06-05.html", "ex06-06.html", "ex06-07.html", "ex06-08.html",
-            "ex06-09.html", "ex06-10.html", "ex06-10a.html", "ex06-11.html",
-            "ex06-12.html", "ex06-13.html", "ex06-14.html", "ex06-15.html",
-            "ex06-16.html", "ex06-17.html"
-        ],
-        "7일차": [
-            "ex07-01.html", "ex07-01a.html", "ex07-02.html", "ex07-03.html",
-            "ex07-04.html", "ex07-05.html", "ex07-06.html", "ex07-07.html",
-            "ex07-08.html", "ex07-09.html", "ex07-10.html", "ex07-10a.html",
-            "ex07-11.html", "ex07-12.html", "ex07-13.html"
-        ],
-        "8일차": [
-            "ex08-01.html", "ex08-02.html", "ex08-02a.html", "ex08-03.html",
-            "ex08-04.html", "ex08-05.html", "ex08-06.html", "ex08-07.html",
-            "ex08-08.html", "ex08-09.html", "ex08-10.html", "ex08-11.html",
-            "ex08-12.html", "ex08-13.html"
-        ],
-        "9일차": [
-            "ex09-01.html",
-            "ex09-06.html", "ex09-07.html", "ex09-08.html", "ex09-09.html",
-            "ex09-10.html", "ex09-11.html", "ex09-12.html"
-        ],
-        "10일차": [
-            "ex10-01.html", "ex10-02.html", "ex10-03.html", "ex10-04.html",
-            "ex10-05.html", "ex10-06.html", "ex10-07.html", "ex10-07a.html",
-            "ex10-07b.html", "ex10-08.html", "ex10-09.html", "ex10-10.html",
-            "ex10-11.html", "ex10-11a.html", "ex10-11b.html", "ex10-11c.html"
-        ],
-        "11일차": [
-            "ex11-01.html", "ex11-02.html", "ex11-03.html", "ex11-04.html",
-            "ex11-05.html", "ex11-06.html", "ex11-07.html", "ex11-08.html",
-            "ex11-09.html", "ex11-10.html", "ex11-11.html", "ex11-11a.html",
-            "ex11-11b.html", "ex11-11c.html", "ex11-12.html", "ex11-13.html",
-            "ex11-14.html", "ex11-15.html"
-        ],
-        "12일차": [
-            "ex12-01.html", "ex12-02.html", "ex12-02Bubble.htm", "ex12-02Line.html",
-            "ex12-03.html", "ex12-04.html", "ex12-05.html", "ex12-05a.html",
-            "ex12-06.html", "ex12-06a.html", "ex12-06b.html", "ex12-06c.html",
-            "ex12-06d.html", "ex12-06e.html", "ex12-07.html", "ex12-07a.html",
-            "ex12-07b.html"
-        ],
-        "13일차": [
-            "ex13-01.html", "ex13-02.html", "ex13-03.html", "ex13-04chat.html",
-            "ex13-04crud.html"
-        ]
-    };
+  <main class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>분류</h2>
+      </div>
 
-    const dayList = document.getElementById("dayList");
+      <div class="grid" id="categoryGrid"></div>
+    </div>
+  </main>
 
-    Object.entries(practiceData).forEach(([day, files]) => {
-        const card = document.createElement("section");
-        card.className = "day-card";
+  <footer class="footer">
+    <div class="container">
+      BuildEnough study repository
+    </div>
+  </footer>
 
-        const top = document.createElement("div");
-        top.className = "card-top";
+  <script>
+    const categories = [
+      {
+        title: "Java",
+        tag: "Language",
+        desc: "Java 문법, 객체지향, 예외처리, 컬렉션, 스레드 등 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/java"
+      },
+      {
+        title: "Python",
+        tag: "Language",
+        desc: "Python 기초 문법, 함수, 클래스, 예외처리, 내장함수 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/python"
+      },
+      {
+        title: "JavaScript",
+        tag: "Language",
+        desc: "JavaScript 기초 문법과 브라우저 예제 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/javascript"
+      },
+      {
+        title: "Spring",
+        tag: "Framework",
+        desc: "Spring 관련 학습 및 프로젝트 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/spring"
+      },
+      {
+        title: "Android",
+        tag: "Framework",
+        desc: "Android 실습 및 프로젝트 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/android"
+      },
+      {
+        title: "Django",
+        tag: "Framework",
+        desc: "Django 학습 내용 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/Django"
+      },
+      {
+        title: "React",
+        tag: "Framework",
+        desc: "React 프로젝트 및 학습 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/react"
+      },
+      {
+        title: "Git",
+        tag: "Tool",
+        desc: "Git, GitHub, 브랜치 전략, 협업 방식 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/git"
+      },
+      {
+        title: "DB",
+        tag: "Database",
+        desc: "데이터베이스 개념, 실습, 환경 설정 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/DB"
+      },
+      {
+        title: "HTML / CSS",
+        tag: "Frontend",
+        desc: "HTML, CSS 실습 예제 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/htmlCss"
+      },
+      {
+        title: "Computer Science",
+        tag: "CS",
+        desc: "네트워크, 운영체제, 자료구조, 웹, 백엔드 등 CS 기초 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/ComputerScience"
+      },
+      {
+        title: "Edu",
+        tag: "Etc",
+        desc: "수업, 실습, 과제, 학습 자료 정리",
+        folderUrl: "https://github.com/BuildEnough/study/tree/master/edu"
+      }
+    ];
 
-        const title = document.createElement("h3");
-        title.textContent = day;
+    const grid = document.getElementById("categoryGrid");
 
-        const count = document.createElement("span");
-        count.className = "count";
-        count.textContent = `${files.length}개`;
+    categories.forEach(item => {
+      const card = document.createElement("article");
+      card.className = "card";
 
-        top.appendChild(title);
-        top.appendChild(count);
+      card.innerHTML = `
+        <div class="card-top">
+          <h3>${item.title}</h3>
+          <span class="tag">${item.tag}</span>
+        </div>
+        <p>${item.desc}</p>
+        <div class="card-actions">
+          <a href="${item.folderUrl}" target="_blank" rel="noopener noreferrer">폴더 보기 →</a>
+        </div>
+      `;
 
-        const examples = document.createElement("div");
-        examples.className = "examples";
-
-        files.forEach(file => {
-            const link = document.createElement("a");
-            link.href = "edu/web/" + file;
-            link.textContent = file;
-            examples.appendChild(link);
-        });
-
-        card.appendChild(top);
-        card.appendChild(examples);
-        dayList.appendChild(card);
+      grid.appendChild(card);
     });
-</script>
+  </script>
 </body>
 </html>
