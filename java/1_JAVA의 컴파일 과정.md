@@ -6,6 +6,6 @@
 
 ## 정리
 1. 자바 소스 파일(~.java)을 작성
-2. java.exe로 바이트코드 파일(~.class) 생성
+2. javac.exe로 바이트코드 파일(~.class) 생성
 3. java.exe로 JVM 구동
 4. JVM은 main() 메소드를 찾아 메소드 블록 실행시킴
