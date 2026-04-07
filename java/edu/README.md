@@ -669,7 +669,7 @@ System.out.println(s4.name);   // 애슐리
     - Exception in thread "main" java.lang.ClassCastException 형변환 예외 발생
     - 매번 형변환
 
-- Generic(일반화) 방식
+- Generic(일반화) 방식 - [소스](./day03/ex06_generic/app/src/main/java/ex06_generic/App.java)
     ```java
     class Box<T> { // 아무 타입이나 상관없음
         T value; // 멤버 필드, Object라서 어떤 타입이든지 받을 수 있음
