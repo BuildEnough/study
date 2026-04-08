@@ -22,7 +22,6 @@
 
 
 ## 2026-04-07(44일차)
-
 ### 일반화 프로그래밍
 - 제네릭
     - Number 타입: 숫자 종류는 모두 받을 수 있는 클래스 타입
@@ -31,12 +30,14 @@
 - `.\gradlew.bat bootrun`: 명령어로 실행
 - MVC
 
-#### Spring Log 배너
+### Spring Log 배너
 - 이거 신기함
 - [Spring Boot Banner Generator](https://devops.datenkollektiv.de/banner.txt/index.html)
 
-## 2026-04-08(45일차)
 
+## 2026-04-08(45일차)
+### 스프링부트 프론트엔드
+### 공공데이터포털 API
 
 ## 2026-04-09(46일차)
 
