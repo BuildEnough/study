@@ -58,3 +58,33 @@ public class HelloSpringApplication {
 }
 ```
 - @SpringBootApplication이 스프링 부트 애플리케이션을 실행해주고 톰캣이라는 웹 서버를 내장하고 있어서 톰캣을 자체적으로 띄우면서 스프링 부트를 동작시킴 
+
+## External Libraries
+![alt text](img/3.png)
+- 땡겨온 라이브러리들 확인
+
+### Gradle에 Dependencies
+- Gradle은 의존관계가 있는 라이브러리를 함께 다운로드 함
+
+### 스프링 부트 라이브러리
+- spring-boot-starter-web
+	- spring-boot-starter-tomcat: 톰캣 (웹서버)
+	- spring-webmvc: 스프링 웹 MVC
+
+- spring-boot-starter-thymeleaf: 타임리프 템플릿 엔진(View)
+
+- spring-boot-starter(공통): 스프링 부트 + 스프링 코어 + 로깅
+	- spring-boot
+		![alt text](img/4.png)
+		- spring-core
+	- spring-boot-starter-logging
+		![alt text](img/5.png)
+		- logback, slf4j
+
+### 테스트 라이브러리
+- spring-boot-starter-test
+	![alt text](img/6.png)
+	- junit: 테스트 프레임워크, 테스트 할 때 사용
+	- mockito: 목 라이브러리
+	- assertj: 테스트 코드를 좀 더 편하게 작성하게 도와주는 라이브러리
+	- spring-test: 스프링 통합 테스트 지원
