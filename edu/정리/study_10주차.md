@@ -39,7 +39,15 @@
 ### 스프링부트 프론트엔드
 ### 공공데이터포털 API
 
+
 ## 2026-04-09(46일차)
+### build.gradle 관련 팁
+### HTTP 메서드 정리
+### Postman 사용법
+### Spring Boot JPA + DB 연동
+### Spring 프로젝트 구조
+### Spring Boot webboard(테스트)
+
 
 
 ## 2026-04-10(47일차)
