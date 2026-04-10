@@ -1,5 +1,5 @@
 # 10주차
-## 2026-04-06(43일차)
+## 2026-04-06(42일차)
 ### JAVA
 ### 객체지향
 ### 클래스와 객체
@@ -21,7 +21,7 @@
 파이썬에서 `__init__` 이거 외국에서는 dunder Score로 부름, (던더 스코어)
 
 
-## 2026-04-07(44일차)
+## 2026-04-07(43일차)
 ### 일반화 프로그래밍
 - 제네릭
     - Number 타입: 숫자 종류는 모두 받을 수 있는 클래스 타입
@@ -35,12 +35,12 @@
 - [Spring Boot Banner Generator](https://devops.datenkollektiv.de/banner.txt/index.html)
 
 
-## 2026-04-08(45일차)
+## 2026-04-08(44일차)
 ### 스프링부트 프론트엔드
 ### 공공데이터포털 API
 
 
-## 2026-04-09(46일차)
+## 2026-04-09(45일차)
 ### build.gradle 관련 팁
 ### HTTP 메서드 정리
 ### Postman 사용법
@@ -49,5 +49,29 @@
 ### Spring Boot webboard(테스트)
 
 
+## 2026-04-10(46일차)
+### Java 문법: Record
+- **java 14부터 나온건데 좀 신기함**
 
-## 2026-04-10(47일차)
+### @Autowired 사용 이유
+
+```java
+public class BoardController {
+
+    @Autowired
+    private final BoardRepository boardRepository; // 아직까지 오류남, BoardRepository가 인터페이스라서 final 제거 해야되긴함
+
+    // // BoardRepository와 같은 객체를 불러오면 Controller에서 사용할 수 있도록 주입(DI)
+    // public BoardController(BoardRepository boardRepository) {
+    //     this.boardRepository = boardRepository;
+    // }
+}
+```
+
+### 부트스트랩 사용
+- CDN
+
+### 글 작성까지
+### Autowired
+### Spring Boot webboard
+### Thymeleaf 레이아웃
