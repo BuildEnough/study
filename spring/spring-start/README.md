@@ -60,7 +60,7 @@ public class HelloSpringApplication {
 - @SpringBootApplication이 스프링 부트 애플리케이션을 실행해주고 톰캣이라는 웹 서버를 내장하고 있어서 톰캣을 자체적으로 띄우면서 스프링 부트를 동작시킴 
 
 ## External Libraries
-![alt text](img/3.png)
+![alt text](img/3.png). 
 - 땡겨온 라이브러리들 확인
 
 ### Gradle에 Dependencies
@@ -75,16 +75,57 @@ public class HelloSpringApplication {
 
 - spring-boot-starter(공통): 스프링 부트 + 스프링 코어 + 로깅
 	- spring-boot
-		![alt text](img/4.png)
+		![alt text](img/4.png). 
 		- spring-core
 	- spring-boot-starter-logging
-		![alt text](img/5.png)
+		![alt text](img/5.png). 
 		- logback, slf4j
 
 ### 테스트 라이브러리
 - spring-boot-starter-test
-	![alt text](img/6.png)
+	![alt text](img/6.png). 
 	- junit: 테스트 프레임워크, 테스트 할 때 사용
 	- mockito: 목 라이브러리
 	- assertj: 테스트 코드를 좀 더 편하게 작성하게 도와주는 라이브러리
 	- spring-test: 스프링 통합 테스트 지원
+
+### View 환경설정
+- [spring boot의 welcome-page](https://docs.spring.io/spring-boot/reference/web/reactive.html#web.reactive.webflux.welcome-page)
+- [스프링 공식 튜토리얼](https://spring.io/guides/gs/serving-web-content)
+- [thymeleaf 스프링부트 메뉴얼](https://docs.spring.io/spring-boot/reference/web/reactive.html#web.reactive.webflux.template-engines)
+
+### 스프링에서 화면 보이는 원리
+- 컨트롤러에서 리턴 값으로 문자를 반환하면 뷰 리졸버(viewResolver)가 화면을 찾아서 처리함
+	- 스프링 부트 템플릿 엔진 viewName 매핑
+	- `resources:templates/` + viewName + `.html`
+	```java
+	@Controller
+	public class HelloController {
+
+		@GetMapping("hello")
+		public String hello(Model model) {
+			model.addAttribute("data", "hello");
+			return "hello";
+		}
+	}
+	```
+
+### 빌드하고 실행하기
+1. 프로젝트 폴더 파일 이동
+	- `cd` 명령어 사용
+2. 빌드
+	- `./gradlew build`: 맥
+	- `gradlew.bat build`: 윈도우
+	- .jar 파일 생성됨
+3. build 폴더 안에 libs 안으로 들어감
+	- `cd build/libs`
+4. 실행
+	- `java -jar 만들어진파일.jar`
+
+윈도우 사용자를 위한 팁
+콘솔로 이동 명령 프롬프트(cmd)로 이동
+./gradlew gradlew.bat 를 실행하면 됩니다.
+명령 프롬프트에서 gradlew.bat 를 실행하려면 gradlew 하고 엔터를 치면 됩니다.
+gradlew build
+폴더 목록 확인 ls dir
+윈도우에서 Git bash 터미널 사용하기
