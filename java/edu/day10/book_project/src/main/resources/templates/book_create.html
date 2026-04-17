@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>도서 폼</title>
+</head>
+<body>
+<h1 th:text="${mode == 'create'} ? '도서 등록' : '도서 수정'"></h1>
+
+<form th:action="${mode == 'create'} ? @{/book/create} : @{/book/modify/{bookId}(bookId=${bookId})}"
+      th:object="${bookForm}"
+      method="post">
+
+    <div>
+        <label>제목</label>
+        <input type="text" th:field="*{title}">
+        <div th:errors="*{title}" style="color:red"></div>
+    </div>
+
+    <div>
+        <label>저자</label>
+        <input type="text" th:field="*{author}">
+    </div>
+
+    <div>
+        <label>출판사</label>
+        <input type="text" th:field="*{publisher}">
+    </div>
+
+    <div>
+        <label>ISBN</label>
+        <input type="text" th:field="*{isbn}">
+        <div th:errors="*{isbn}" style="color:red"></div>
+    </div>
+
+    <div>
+        <label>카테고리</label>
+        <input type="text" th:field="*{category}">
+    </div>
+
+    <div>
+        <label>가격</label>
+        <input type="number" th:field="*{price}">
+        <div th:errors="*{price}" style="color:red"></div>
+    </div>
+
+    <div>
+        <label>재고</label>
+        <input type="number" th:field="*{stock}">
+        <div th:errors="*{stock}" style="color:red"></div>
+    </div>
+
+    <div>
+        <label>출판일</label>
+        <input type="date" th:field="*{publishedDate}">
+    </div>
+
+    <div>
+        <label>설명</label><br>
+        <textarea th:field="*{description}" rows="5" cols="50"></textarea>
+    </div>
+
+    <div th:if="${errorMessage}" style="color:red">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <br>
+    <button type="submit" th:text="${mode == 'create'} ? '등록' : '수정'"></button>
+    <a th:href="@{/book/list}">취소</a>
+</form>
+</body>
+</html>

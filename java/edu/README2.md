@@ -763,7 +763,131 @@ implementation 'org.springframework.boot:spring-boot-starter-validation'
 ### 클래스/인터페이스 생성
 - dto/Board 클래스 - [소스](./day08/studygroup/src/main/java/com/pknu26/studygroup/dto/Board.java)
 - validation/BoardForm 클래스 - [소스](./day08/studygroup/src/main/java/com/pknu26/studygroup/validation/BoardForm.java)
-- mapper/BoardMapper 인터페이스 - [소스](./day08/studygroup/src/main/java/com/pknu26/studygroup/mapper/BoardMapper.java)
+- mapper/B/templates/board/list.html - [소스](./day08/studygroup/src/main/resources/templates/board/list.html)
+- resources/templates/board/form.html - [소스](./day08/studygroup/src/main/resources/templates/board/form.html)  
+
+### 중간 실행 결과
+![](img/27.png)
+
+## 9일차
+
+### MyBatis StudyGroup 계속
+
+스터디 모집 웹사이트
+
+### 글 수정
+
+- controller/BoardController.java 에 수정처리 추가
+
+### 삭제 메시지창 띄우기
+
+- /templates/board/detail.html 삭제 버튼 수정
+    - 부트스트랩 기능 추가
+    - 자바스크립트 코드 추가  
+![](img/28.png)
+
+### 댓글 테이블 생성
+- 게시글 : 댓글 => 1 : N
+```sql
+CREATE TABLE REPLY (
+    REPLY_ID         NUMBER          PRIMARY KEY,
+    BOARD_ID         NUMBER          NOT NULL,
+    REPLY_CONTENT    VARCHAR2(1000)  NOT NULL,
+    REPLY_WRITER     VARCHAR2(100)   NOT NULL,
+    CREATED_AT       DATE DEFAULT SYSDATE NOT NULL,
+    CONSTRAINT FK_REPLY_BOARD
+        FOREIGN KEY (BOARD_ID)
+        REFERENCES BOARD (BOARD_ID)
+);
+
+CREATE SEQUENCE REPLY_SEQ
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+```
+
+### 댓글 관련 파일 생성
+- controller/ReplyController 클래스
+- dto/Reply 클래스
+- mapper/ReplyMapper 인터페이스
+- service/ReplyService 인터페이스
+- service/ReplyServiceImpl 클래스
+- validation/ReplyForm 클래스
+- resources/mapper/ReplyMapper.xml 파일
+
+### 페이징 개요
+- 게시판 글이 한 화면에 일정단위(보통 10개)로 출력
+- 다음페이지로 넘어가는 페이징 숫자영역 따로 표시
+- 한페이지에 수십만개의 데이터를 한번에 출력 못함
+
+```sql
+-- 오라클만 적용
+OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
+```
+
+### 신규 추가
+- dto/PageRequest 클래스 생성
+- dto/PageResponse 클래스 생성
+
+### 기존파일 수정
+- mapper/BoardMapper 인터페이스, findAll 메서드 수정, getTotalCount 메서드
+- mapper/BoardMapper.xml 위 메서드 관련 쿼리 수정, 작성
+- service/BoardService 인터페이스 readBoardList 메서드 수정
+- service/BoardServiceImpl 클래스 readBoardList 메서드 수정
+- controller/BoardController 클래스 list 메서드 수정
+- templates/board/list.html 수정
+![](img/29.png)
+
+### 게시글 옆 댓글수 표시
+- dto/Board 클래스에 멤버변수 추가
+- mapper/BoardMapper.xml 서브쿼리 추가
+![](img/30.png)
+
+### 회원가입/로그인 개요
+- 직접개발 vs Spring Security 의존성 추가
+- Spring Security + JWT : API 방식 개발
+- 세션 : 접속 후 사용시간, 사용자의 상태정보 유지하는 방법
+- HttpSession 사용
+- 회원 비번, 민감한 개인정보는 암호화
+
+### 회원 테이블 생성
+```sql
+-- 회원테이블
+CREATE TABLE USER_ACCOUNT (
+    USER_ID      NUMBER         PRIMARY KEY,
+    LOGIN_ID     VARCHAR2(50)   NOT NULL UNIQUE,
+    PASSWORD     VARCHAR2(255)  NOT NULL,
+    NAME         VARCHAR2(100)  NOT NULL,
+    ROLE         VARCHAR2(30)   DEFAULT 'ROLE_USER' NOT NULL,
+    CREATED_AT   DATE           DEFAULT SYSDATE NOT NULL,
+    UPDATED_AT   DATE
+);
+
+-- 회원용 시퀀스
+CREATE SEQUENCE USER_ACCOUNT_SEQ
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+```
+
+### spring-security 의존성 추가
+- build.gradle에 암호화 관련 의존성 추가
+```application
+implementation 'org.springframework.security:spring-security-crypto'
+```
+
+### 관련 파일 변경/추가
+- config/PasswordConfig 클래스 생성
+- dto/User 클래스 생성
+- mapper/UserMapper 인터페이스 생성
+- mapper/UserMapper.xml 생성
+- service/UserService 인터페이스 생성
+- service/UserServiceImpl 클래스 생성
+- dto/LoginUser 클래스 생성 - 브라우저에 보관되는 세션에 필요정보만 클래스 생성
+- controller/UserController 클래스 생성
+- templates/user/join.html 페이지 생성oardMapper 인터페이스 - [소스](./day08/studygroup/src/main/java/com/pknu26/studygroup/mapper/BoardMapper.java)
 - resources/mapper/BoardMapper.xml 쿼리 - [소스](./day08/studygroup/src/main/resources/mapper/BoardMapper.xml)
 - service/BoardService 인터페이스 - [소스](./day08/studygroup/src/main/java/com/pknu26/studygroup/service/BoardService.java)
 - service/BoardServcieImpl 클래스 - [소스](./day08/studygroup/src/main/java/com/pknu26/studygroup/service/BoardServiceImpl.java)
@@ -772,19 +896,155 @@ implementation 'org.springframework.boot:spring-boot-starter-validation'
 ### HTML 생성
 - resources/templates/layout.html - [소스](./day08/studygroup/src/main/resources/templates/layout.html)
 - resources/templates/board/detail.html - [소스](./day08/studygroup/src/main/resources/templates/board/detail.html)
-- resources/templates/board/list.html - [소스](./day08/studygroup/src/main/resources/templates/board/list.html)
-- resources/templates/board/form.html - [소스](./day08/studygroup/src/main/resources/templates/board/form.html)  
-
-### 중간 실행 결과
-![](img/27.png)
+- resources  
+![](img/31.png)
 
 
+## 10일차
+### MyBatis StudyGroup 계속
+
+### 회원가입/로그인 계속
+- templates/user/login.html 페이지 생성
+- controller/UserController 클래스에 로그인관련 메서드 추가  
+![](img/32.png)
+
+### 부트스트랩 템플릿 리스트
+- [부트스트랩 공식 사이트](https://getbootstrap.com/docs/5.3/examples/)
+  - 부트스트랩 예제 페이지, download examples 다운로드 후 압축해제
+  - 각 기능별 폴더에서 참고해서 사용
+- [스타트 부트스트랩](https://startbootstrap.com/)
+- [mdbootstrap](https://mdbootstrap.com/freebies/)
+- [bootstrapmade](https://bootstrapmade.com/)
+
+### 부트스트랩 기능 구현
+- Navbar/index.html 소스 참조
+- 태그 복사/붙여넣기
+- 필요기능 추가
 
 
+## 11일차
+
+### 게시판 계정 연결
+- 세션과 연결
+
+### 게시판 이슈(현재 문제점)
+1. 게시글 상세에서 이름대신 로그인 아이디가 표시
+2. 본인 글이 아니라 수정됨
+3. 에디터 적용후 상세보기 화면깨짐
+    - th:text -> th:utext 로 변경
+4. 게시판 다른 페이지에서 게시글 삭제후 첫번째 페이지로 전환
+5. 댓글 작성 및 삭제 기능 권한 아무나 가능
+6. Navigation 동작없는 검색 입력
+
+### 게시판 웹에디터 적용
+
+- 티스토리 웹에디터
+    ![alt text](img/33.png)
+
+- 웹데이터 리스트
+    - CK에디터 : https://ckeditor.com/ckeditor-5/ 유무료 웹에디터 1등
+    - 트럼보우YG : https://alex-d.github.io/Trumbowyg/ 심플 무료 웹에디터
+
+- Trumbowyg 적용
+    1. trumbowyg 관련 css, js 파일 static 저장
+    2. layout.html 수정
+
+```html
+<!doctype html>
+<!-- th:fragment에 pageScripts 추가 -->
+<html
+    lang="ko"
+    xmlns:th="http://www.thymeleaf.org"
+    th:fragment="layout(content, pageScripts)"
+    data-bs-theme="auto"
+>
+    ...
+    <head>
+        <!-- trumbowyg용 css -->
+        <link
+            rel="stylesheet"
+            type="text/css"
+            th:href="@{/trumbowyg/ui/trumbowyg.min.css}"
+        />
+    </head>
+    <body>
+        ...
+        <!-- 페이지 개별 스크립트는 맨 마지막 -->
+        <script th:replace="${pageScripts} ?: ~{}"></script>
+    </body>
+</html>
+```
+
+2. form.html 수정
+
+```html
+<!doctype html>
+<!-- 추가된 pageScript 레이아웃 영역 작성 -->
+<html
+    lang="ko"
+    xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{layout :: layout(~{::content}, ~{::pageScripts})}"
+>
+    ...
+
+    <!-- pageScripts를 사용하는 페이지 -->
+    <script th:fragment="pageScripts">
+        $(function () {
+            $("#content").trumbowyg();
+        });
+    </script>
+</html>
+```
+
+3. trumbowyg 에디터를 사용하지 않는 나머지 html
+```html
+<!doctype html>
+<!-- pageScripts를 사용하기때문에 ~{} 표현 -->
+<html
+    lang="ko"
+    xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{layout :: layout(~{::content}, ~{})}"
+>
+```
+
+![alt text](img/34.png)
+
+### 관리자 기능
+- 관리자구분
+  - `ROLE_USER` : 일반 사용자
+  - `ROLE_ADMIN` : 관리자
+- 게시글 삭제
+
+### 웹사이트 홈 페이지
+- HomeController 생성
+- templates/home.html 생성
+- bootstrap 공식 예제 carousel 활용  
+![alt text](img/35.png)
 
 
+### 스터디모집 DB설계
+- 스터디 모집 ERD
+    ![alt text](img/36.png)
+- 테이블 관계
+    - 스터디 종류 카테고리 1개는 여러개의 스터디글에 포함
+        - categories 1 : N study_posts
+    - 사용자 1명은 여러개의 스터디글을 쓸 수 있음
+        - user_account 1 : N study_posts
+    - 사용자 1명은 여러개의 댓글을 씔 수 있음
+        - user_account 1 : N comments
+    - 스터디 게시글 1개에는 여러개의 댓글이 적힘
+        - study_posts 1 : N comments
+    - 사용자 1명은 여러 스터디 게시글에 신청가능
+        - user_account 1 : N study_applications
+    - 스터디 게시글 1개에는 여러 신청이 들어옴
+        - study_posts 1 : N study_applications
 
 
+### 스터디모집 웹사이트
+
+### 게시판 내용 웹에디터 추가
+
+### 조회수 증가
 
 
 
@@ -802,6 +1062,7 @@ implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 
 ---
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 ### Spring Boot API - 추후 다시
 ![alt text](img/14.png)
