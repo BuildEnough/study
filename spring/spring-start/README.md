@@ -1,4 +1,5 @@
 # 스프링 입문
+# 2. 프로젝트 환경설정
 ## [프로젝트 생성](https://start.spring.io/)
 ![](img/1.png)
 Artifact: build 되어 나올때의 결과물  
@@ -129,3 +130,112 @@ public class HelloSpringApplication {
 gradlew build
 폴더 목록 확인 ls dir
 윈도우에서 Git bash 터미널 사용하기
+
+---
+
+# 3. 스프링 웹 개발 기초
+## thymeleaf 엔진의 장점
+- html 파일의 껍데기를 그대로 볼 수 있다(파일 절대 경로)
+
+## @RequiredParam
+- `required = false`가 기본값이라서 값을 넘겨줘야 함
+
+## @ResponseBody
+-  @ResponseBody를 사용하면 뷰 리졸버(viewResolver)를 사용하지 않음
+- 대신에 HTTP의 BODY에 문자 내용을 직접 반환함
+- @ResponseBody 를 사용하고, 객체를 반환하면 객체가 JSON으로 변환됨
+
+## @ResponseBody 사용
+- HTTP의 BODY에 문자 내용을 직접 반환
+- viewResolver 대신에 HttpMessageConverter가 동작
+- 기본 문자처리: StringHttpMessageConverter
+- 기본 객체처리: MappingJackson2HttpMessageConverter
+- byte 처리 등등 기타 여러 HttpMessageConverter가 기본으로 등록되어 있음  
+![](img/7.png)
+
+---
+
+# 4. 회원 관리 예제-백엔드 개발
+## Optional
+- null을 처리하는 방법으로 null을 그대로 반환하는 것보다 `Optional`으로 감싸서 반환하는 것을 선호함
+- 자바 8부터 들어가있는 기능
+- Optional.ofNullable: Null이 반환될 가능성이 있는 경우 사용
+	```java
+	@Override
+    public Optional<Member> findById(Long id) {
+        return Optional.ofNullable(store.get(id));
+    }
+	```
+
+## concurrenthashmap - 나중에 좀 더 알아보자
+- 동시성 문제가 있을 수 있어서 공유되는 변수일 경우 concurrenthashmap을 사용
+- 혹은 AtomicLong 사용 고려 -> 멀티스레드와 동시성 공부해보기
+
+## 테스트 케이스 - 아직 좀 어려움
+- 테스트는 순서가 따로 없음
+- 테스트는 각각 독립적으로 실행되어야 함
+- 중요: 하나의 테스트가 끝날 때마다 초기화해줘야 함: `@AfterEach`
+	- 한 번에 테스트를 실행하면 메모리 DB에 직전 테스트의 결과가 남아 있을 수 있음 -> 다음 테스트 실패할 수 있음
+- 테스트를 실행하기 전 `@BeforeEach`
+	- 테스트가 서로 영향이 없도록 새로운 객체를 생성하고 의존관계를 새로 맺어줌
+
+## Optional의 ifPreset()
+- Optional 객체가 값을 가지고 있다면 true, 없다면 false 
+- 근데 Optional로 반환되면 보기가 썩.. 좋지 않음
+	```java
+	public Long join(Member member) {
+        // 같은 이름이 있는 중복 회원x
+        Optional<Member> result = memberRepository.findByName(member.getName());
+        result.ifPresent(m -> {
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        });
+
+        memberRepository.save(member);
+        return member.getId();
+    }
+	```
+- 그래서 변수를 따로 빼지않고 ifPresent를 바로 사용
+	```java
+	    public Long join(Member member) {
+        // 같은 이름이 있는 중복 회원x
+        memberRepository.findByName(member.getName())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 회원입니다.");
+                });
+
+        memberRepository.save(member);
+        return member.getId();
+    }
+	```
+
+## 서비스 클래스
+- service 클래스는 비즈니스에 가까운 용어를 사용하는 것이 좋다
+- 서비스 클래스에서 직접 객체를 만들면 테스트 코드에서 객체를 또 생성하는데 repository에서 static이 안붙으면 서로 다른 객체이기 떄문에 틀린 테스트 코드가 나올 수 있다
+	- 따라서 서비스 클래스에서 생성자를 주입 시키는 걸로 바꾸는게 좋다
+	```java
+	// 변경 전
+	private final MemberRepository memberRepository = new MemoryMemberRepository();
+
+	// 변경 후
+	private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+	```
+
+## 테스트 코드
+- 메서드 이름을 한글로 적어도 상관없음
+	- 테스트 코드는 빌드될 때 실제 코드에 포함안돼서 괜찮음
+- 추천코드: given, when, then
+	```java
+	//given
+
+	//when
+
+	//then
+	```
+
+---
+
+# 5. 스프링 빈과 의존관계
