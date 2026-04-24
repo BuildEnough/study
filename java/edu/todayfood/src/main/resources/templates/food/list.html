@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>음식 목록</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 th:text="${title != null ? title : '음식 목록'}">음식 목록</h1>
+      <a th:href="@{/foods/new}" class="btn">등록하기</a>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>이름</th>
+            <th>카테고리</th>
+            <th>평점</th>
+            <th>먹은 날짜</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="food : ${foods}">
+            <td th:text="${food.id}">1</td>
+            <td>
+              <a th:href="@{/foods/{id}(id=${food.id})}" th:text="${food.name}"
+                >음식명</a
+              >
+            </td>
+            <td th:text="${food.category}">한식</td>
+            <td th:text="${food.rating}">5</td>
+            <td th:text="${food.eatDate}">2026-04-21</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
