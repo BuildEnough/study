@@ -1,20 +1,21 @@
 # 스프링 입문
-# 2. 프로젝트 환경설정
-## [프로젝트 생성](https://start.spring.io/)
+
+## 2. 프로젝트 환경설정
+### [프로젝트 생성](https://start.spring.io/)
 ![](img/1.png)
 Artifact: build 되어 나올때의 결과물  
 Dependencies: 스프링부트로 프로젝트를 시작할 때 어떤 라이브러리를 가져올 건지에 대한 것
 Thymeleaf: 템플릿 엔진
 
-## 기본 구조
+### 기본 구조
 ![](img/2.png)  
 main과 test가 기본적으로 나누어져 있는게 표준적
 
-## build.gradle
+### build.gradle
 예전에는 하나씩 다 쳐야하거나 복붙해야 했지만 요즘엔 build.gradle에서 관리해서 편해짐  
 설정 파일  
 버전 설정하고 라이브러리 땡겨온다 정도로 이해
-```gradle
+```java
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '4.0.5' // 스프링 부트 버전
@@ -45,10 +46,9 @@ dependencies { // 프로젝트 설정시 가져온 것들, thymeleaf, web
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
 ```
 
-## HelloSpringApplication.java
+### HelloSpringApplication.java
 ```java
 @SpringBootApplication
 public class HelloSpringApplication {
@@ -60,7 +60,7 @@ public class HelloSpringApplication {
 ```
 - @SpringBootApplication이 스프링 부트 애플리케이션을 실행해주고 톰캣이라는 웹 서버를 내장하고 있어서 톰캣을 자체적으로 띄우면서 스프링 부트를 동작시킴 
 
-## External Libraries
+### External Libraries
 ![alt text](img/3.png). 
 - 땡겨온 라이브러리들 확인
 
@@ -133,19 +133,19 @@ gradlew build
 
 ---
 
-# 3. 스프링 웹 개발 기초
-## thymeleaf 엔진의 장점
+## 3. 스프링 웹 개발 기초
+### thymeleaf 엔진의 장점
 - html 파일의 껍데기를 그대로 볼 수 있다(파일 절대 경로)
 
-## @RequiredParam
+### @RequiredParam
 - `required = false`가 기본값이라서 값을 넘겨줘야 함
 
-## @ResponseBody
+### @ResponseBody
 -  @ResponseBody를 사용하면 뷰 리졸버(viewResolver)를 사용하지 않음
 - 대신에 HTTP의 BODY에 문자 내용을 직접 반환함
 - @ResponseBody 를 사용하고, 객체를 반환하면 객체가 JSON으로 변환됨
 
-## @ResponseBody 사용
+### @ResponseBody 사용
 - HTTP의 BODY에 문자 내용을 직접 반환
 - viewResolver 대신에 HttpMessageConverter가 동작
 - 기본 문자처리: StringHttpMessageConverter
@@ -155,8 +155,8 @@ gradlew build
 
 ---
 
-# 4. 회원 관리 예제-백엔드 개발
-## Optional
+## 4. 회원 관리 예제-백엔드 개발
+### Optional
 - null을 처리하는 방법으로 null을 그대로 반환하는 것보다 `Optional`으로 감싸서 반환하는 것을 선호함
 - 자바 8부터 들어가있는 기능
 - Optional.ofNullable: Null이 반환될 가능성이 있는 경우 사용
@@ -167,11 +167,11 @@ gradlew build
     }
 	```
 
-## concurrenthashmap - 나중에 좀 더 알아보자
+### concurrenthashmap - 나중에 좀 더 알아보자
 - 동시성 문제가 있을 수 있어서 공유되는 변수일 경우 concurrenthashmap을 사용
 - 혹은 AtomicLong 사용 고려 -> 멀티스레드와 동시성 공부해보기
 
-## 테스트 케이스 - 아직 좀 어려움
+### 테스트 케이스 - 아직 좀 어려움
 - 테스트는 순서가 따로 없음
 - 테스트는 각각 독립적으로 실행되어야 함
 - 중요: 하나의 테스트가 끝날 때마다 초기화해줘야 함: `@AfterEach`
@@ -179,7 +179,7 @@ gradlew build
 - 테스트를 실행하기 전 `@BeforeEach`
 	- 테스트가 서로 영향이 없도록 새로운 객체를 생성하고 의존관계를 새로 맺어줌
 
-## Optional의 ifPreset()
+### Optional의 ifPreset()
 - Optional 객체가 값을 가지고 있다면 true, 없다면 false 
 - 근데 Optional로 반환되면 보기가 썩.. 좋지 않음
 	```java
@@ -208,7 +208,7 @@ gradlew build
     }
 	```
 
-## 서비스 클래스
+### 서비스 클래스
 - service 클래스는 비즈니스에 가까운 용어를 사용하는 것이 좋다
 - 서비스 클래스에서 직접 객체를 만들면 테스트 코드에서 객체를 또 생성하는데 repository에서 static이 안붙으면 서로 다른 객체이기 떄문에 틀린 테스트 코드가 나올 수 있다
 	- 따라서 서비스 클래스에서 생성자를 주입 시키는 걸로 바꾸는게 좋다
@@ -224,7 +224,7 @@ gradlew build
     }
 	```
 
-## 테스트 코드
+### 테스트 코드
 - 메서드 이름을 한글로 적어도 상관없음
 	- 테스트 코드는 빌드될 때 실제 코드에 포함안돼서 괜찮음
 - 추천코드: given, when, then
@@ -238,4 +238,79 @@ gradlew build
 
 ---
 
-# 5. 스프링 빈과 의존관계
+## 5. 스프링 빈과 의존관계
+### @Autowired
+- 스프링이 연관된 객체를 스프링 컨테이너에서 찾아서 넣어줌
+- 스프링 빈이 등록되어 있는 것만 넣어줌
+- 생성자에 @Autowired를 사용하면 객체 생성 시점에 스프링 컨테이너에서 해당 스프링 빈을 찾아 주입한다
+- 즉, @Autowired를 통한 DI는 스프링이 관리하는 객체에서만 동작한다
+- 참고: 생성자가 1개만 있으면 @Autowired 생략 가능(생성자가 2개면 어떤 걸 넣어야 할지 몰라 표기 해줘야 함)
+
+### 스프링 빈을 등록하는 2가지 방법
+1. 컴포넌트 스캔과 자동 의존관계 설정
+	- @Component 애노테이션이 있으면 스프링 빈으로 자동 등록됨
+	- @Controller, @Service, @Repository는 @Component를 포함하기 때문에 스프링 빈으로 자동 등록된다
+	- 참고: 스프링 컨테이너에 빈을 등록할 때, 기본적으로 singleton으로 등록
+2. 자바 코드로 직접 스프링 빈 등록
+	- @Bean 애노테이션을 사용하여 주입해준다
+	```java
+	@Configuration
+	public class SpringConfig {
+
+		@Bean
+		public MemberService memberService() {
+			return new MemberService(memberRepository());
+		}
+
+		@Bean
+		public MemberRepository memberRepository() {
+			return new MemoryMemberRepository();
+		}
+	}
+	```
+
+### 의존성 주입 DI
+1. 필드 주입
+	- 스프링이 시작할 때만 DI를 해주고 향후 바꿀 수 있는 방법이 없다
+	```java
+	@Controller
+	public class MemberController {
+
+		@Autowired
+		private MemberService memberService;
+	}
+	```
+2. setter 주입
+	- 애플리케이션 로딩 시점에 바꾸긴하는데 한 번 설정되면 잘 안바꾼다
+	- 그런데 setter 주입으로하면 public으로 노출이 되어있다
+		- `memberService.setMemberService`처럼 다른 개발자가 호출을 할 수도 있다는 의미
+	```java
+	@Controller
+	public class MemberController {
+
+		private MemberService memberService;
+
+		@Autowired
+		public void setMemberService(MemberService memberService) {
+			this.memberService = memberService;
+		}
+	}
+	```
+
+3. 생성자 주입(권장)
+	- 스프링 컨테이너가 조립되는 시점, 처음 세팅이 되는 시점에 주입이 되고 끝남
+	- 의존관계가 실행 중에 동적으로 변하는 경우(서버가 run되고 있는 상태에서 변경)가 거의 없어 생성자 주입을 권장
+	```java
+	@Controller
+	public class MemberController {
+
+		private final MemberService memberService;
+
+		@Autowired
+		public MemberController(MemberService memberService) {
+			this.memberService = memberService;
+		}
+	}
+	```
+
+## 6. 웹 MVC 개발
