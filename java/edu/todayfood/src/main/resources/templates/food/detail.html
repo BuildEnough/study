@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>음식 상세</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>음식 상세</h1>
+      <div class="card">
+        <p><strong>이름:</strong> <span th:text="${food.name}"></span></p>
+        <p>
+          <strong>카테고리:</strong> <span th:text="${food.category}"></span>
+        </p>
+        <p><strong>평점:</strong> <span th:text="${food.rating}"></span></p>
+        <p><strong>메모:</strong> <span th:text="${food.memo}"></span></p>
+        <p>
+          <strong>먹은 날짜:</strong> <span th:text="${food.eatDate}"></span>
+        </p>
+        <p>
+          <strong>작성일:</strong> <span th:text="${food.createdAt}"></span>
+        </p>
+      </div>
+      <div class="menu">
+        <a th:href="@{/foods/{id}/edit(id=${food.id})}">수정</a>
+        <form
+          th:action="@{/foods/{id}/delete(id=${food.id})}"
+          method="post"
+          style="display: inline"
+        >
+          <button type="submit">삭제</button>
+        </form>
+        <a href="/foods">목록</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>음식 등록</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>음식 등록</h1>
+      <form action="/foods" method="post">
+        <label>이름</label>
+        <input type="text" name="name" required />
+        <label>카테고리</label>
+        <input type="text" name="category" required />
+        <label>평점</label>
+        <input type="number" name="rating" min="1" max="5" />
+        <label>메모</label>
+        <textarea name="memo"></textarea>
+        <label>먹은 날짜</label>
+        <input type="date" name="eatDate" required />
+        <button type="submit">저장</button>
+      </form>
+    </div>
+  </body>
+</html>
