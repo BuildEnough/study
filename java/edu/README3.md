@@ -97,27 +97,28 @@ StudyGroup
     - resources/mapper, SiteImageMapper.xml
 
 ## 16일차
+### StudyGroup 계속
 ### 관리자 홈관리 중 이미지 처리
+- 이미지 관리 계속
     - service, SiteImageService 클래스
     - controller, SiteImageController 클래스
     - controller, HomeController home 메서드 수정
     - templates/admin/siteImage list.html, form.html 작업
 
-
 ### 홈화면 이미지 표시
 - 이미지 표시
-  - mapper, SiteImageMapper findAllActive() 메서드 추가, xml 추가
-  - service, SiteImageService 메서드 변경
-  - home, HomeController home 메서드 로직 변경
+    - mapper, SiteImageMapper findAllActive() 메서드 추가, xml 추가
+    - service, SiteImageService 메서드 변경
+    - home, HomeController home 메서드 로직 변경
 
 ### 추가개발 이슈
 - [ ] 댓글 삭제 확인창 띄우기
 - [ ] Footer 영역, Privacy(개인정보처리방침), Terms(정책) 추가 개발필요
 - [ ] 각 입력태그에 PlaceHolder 추가
 - [ ] 게시판 댓글 작성자 로그인 아이디 바로 표시하게
-
 - [ ] Features, Gallary 부분 관리자 데이터 처리, 홈화면 이미지 표시
-  - Carousel 기능과 동일하게 구현
+    - Carousel 기능과 동일하게 구현
+
 - [ ] 게시판 첨부파일 추가
 - [ ] 관리자 사이트컨텐츠 등록화면, 컨텐츠키를 콤보박스로 변경해보기
 - [ ] 관리자 사이트이미지 등록화면, 이미지키를 콤보박스로 변경해보기
@@ -125,6 +126,7 @@ StudyGroup
 - [ ] 로그인 후 비번변경이나 개인정보 수정화면
 
 ## Spring Security
+
 ### 개요
 - Spring 기반 애플리케이션 인증(Authentication), 권한(Authorization)을 담당하는 보안 프레임워크
     - 인증 : 로그인 기능, 세션처리, CSRF/CORS 보안처리
@@ -135,6 +137,172 @@ StudyGroup
     - 미 로그인시 로그인페이지로 이동
     - 로그인 성공 후 세션에 사용자 정보 저장
 
+### 진행순서
+- 의존성 추가
+- 비밀번호 암호화 PasswordEncoder 등록
+- CustomUserDetails 생성
+- UserDetailsSevervice 생성
+- SecurityConfig 생성
+- 기존 UserController 수정
+- 로그인 페이지 수정
+- layout.html SpringSecurity thymeleaf 추가
+    - session.loginUser 제거
+    - sec:authorize 속성으로 변경
+- Thymeleaf 로그인/관리자 조건 처리
+    ```html
+    <!-- 제거 -->
+    <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+    </div>
+    ```
+- Controller에서 HttpSession 파라미터 제거
+    - @AuthenticationPrincipal CustomUserDetails loginUser 로 변경
+    - 코드 상 LoginUser... 부분 주석처리
+
+### Spring Security 개발
+- build.gradle 의존성 추가
+- 실행화면
+
+
+## 17일차
+### Spring Security
+### build.gradle 적용
+- 서버 실행
+    ```powershell
+    2026-04-27T09:19:15.043+09:00  WARN 25872 --- [studygroup] [  restartedMain] .s.a.UserDetailsServiceAutoConfiguration :
+    # User 임시 패스워드
+    Using generated security password: 2e87fa31-bb87-4b0f-afbb-db975c31dc00
+
+    This generated password is for development use only. Your security configuration must be updated before running your application in production.
+    ```
+- Spring Security Crpto 라이브러리 -> 제거
+
+### JWT 개요
+- JSON Web Token : 로그인 후에 서버에서 발급하는 토큰 기반의 인증방식
+    - React, Node.js 등의 다른 프론트엔드와 연계하는 풀스택개발시 사용하는 인증방식
+    - 서버에 세션을 저장안함. 토큰으로 인증 대체
+
+### JWT 반영순서
+- 로그인 > JWT 발급 > 요청 시 JWT 검증 > 인증처리
+
+### 진행순서
+- build.gradle 의존성 추가
+- application.properties JWT 설정 추가
+- config, JwtProvider 클래스 생성
+- dto/api, API 요청/응답용 dto 생성
+- security, JwtAuthenticationFilter 클래스 생성
+- controller, ApiAuthController 클래스 생성
+- config, SecurityConfig 수정
+- 테스트 콘트롤러
+
+
+## 18일차
+### CORS, CSRF
+- CORS : Cross-Origin Resource Sharing 프로토콜
+    - 서로 다른 오리진(서버)에서 리소스나 상호작용을 위해 브라우저에서 실행되는 스크립트
+    - 서버간에 통신시 기본 보호 기능
+    - com.pknu26.studygroup, com.pknu6.apiboard 둘 사이에 접근불가
+    - CORS로 오픈 설정 후
+- CSRF : Cross-Site Request Forgery 보안
+    - 명시적 동의없이 사용자를 대신 웹앱에서 악의적인 행동을 취하는 공격
+
+### API 테스트
+- main의 폴더와 동일하게 만들어서 테스트 가능
+    - main/.../controller/api -> test/.../controller/api 생성하고 테스트
+
+
+### 소셜 로그인
+
+### 구글 로그인
+```text
+USER_ACCOUNT
+ └─ 우리 서비스 사용자 계정
+
+Spring Security Form Login
+ └─ /user/login
+
+JWT API Login
+ └─ /api/auth/login
+
+추가할 Google Login
+ └─ /oauth2/authorization/google
+ └─ 성공 후 USER_ACCOUNT + USER_SOCIAL_ACCOUNT 저장
+```
+
+## 19일차
+### OAuth
+- Open Authorization: 아이디와 패스워드를 넘겨주지 않고 다른 서비스의 기능을 안전하게 빌려쓰는 기술
+    - 구글, 네이버, 카카오, 페이스북, ...
+- OAuth 1.0 : 암호화방식 너무 복잡(암호화 지옥), 사용하기 어려움.
+- OAuth 2.0 : 복잡한 서명 삭제, 역할분담, 유연한 처리 가능
+
+### 소셜 로그인 구현
+- build.gradle 에 의존성 추가
+- 구글 개발자콘솔 로그인 : https://console.cloud.google.com/
+- 새 프로젝트 생성
+- 프로젝트 선택 > 탐색메뉴(햄버거메뉴)
+- API 및 서비스
+    - 사용자 인증 정보 > +사용자 인증정보 만들기 클릭
+    - OAuth 동의화면 클릭 > 시작하기 클릭
+    - OAuth 클라이언트 ID 클릭
+- 작성 후 만들기 클릭
+- json 다운로드
+- application.properties 구글OAuth 정보 추가
+- powershell에서 구글클라이언트아이디와 비밀키를 OS에 저장
+
+```powershell
+> setx GOOGLE_CLIENT_ID "본인_구글클라이언트아이디"
+
+성공: 지정한 값을 저장했습니다.
+> PS C:\Users\Admin> setx GOOGLE_CLIENT_SECRET "본인_구글클라이언트_시크릿"
+
+성공: 지정한 값을 저장했습니다.
+```
+
+- 파워쉘 재시작 후
+```powershell
+$env:GOOGLE_CLIENT_ID
+$env:GOOGLE_CLIENT_SECRET
+```
+- 소셜 로그인 연결용 테이블 생성
+- 기존 로그인 테이블 password 필드 NOT NULL -> NULL 로 변경(소셜로그인으로는 패스워드 전달안됨)
+- LOGIN_ID 길이 변경 VARCHAR(200), 이메일 입력
+
+- dto, UserSocialAccount 클래스
+- mapper, UserSocialAccountMapper 인터페이스
+- resources/mapper, UserSocialAccountMapper.xml
+- mapper, UserMapper 인터페이스에 신규 메서드 추가
+- resources/mapper, UserMapper.xml 신규 SQL 추가
+
+
+- OAuth2 구글로그인 서비스
+  - security, CustomOAuth2UserService 클래스
+    1. 구글 사용자 정보받기
+    2. provider = google
+    3. providerUserId = 구글 Subject
+    4. USER_SOCIAL_ACCOUNT 테이블에 이미 정보가 있으면 로그인처리
+    5. 없으면 USER_ACCOUNT 생성
+    6. USER_SOCIAL_ACCOUNT 생성
+    7. Spring Security 인증 처리
+
+
+### 남은 이슈
+- [x] favicon 추가
+    - 자동인식방법 resources/static/favicon.ico
+    - png to ico 변환필요
+
+- [x] 에러페이지 필요 - 디자인만 잘하면 됨
+    - 404 에러 : Page Not Found
+    - 500 에러 : Internel Server Error
+
+- [x] home.html 관리자 관리할 화면 생성
+    - Hero 이미지 : 웹 전체 화면을 채우는 배경이미지
+    - Carousel : 이미지가 일정시간마다 전환, 또는 버튼클릭으로 전환되는 디자인
+    - 현재 화면
+- 파일 업로드
+- [x] 세군데 있던 checkAdmin 메서드 정리. AdminHelper 클래스 생성
+- 미니프로젝트 팀 구성
+- 미니프로젝트 주제
 
 
 
