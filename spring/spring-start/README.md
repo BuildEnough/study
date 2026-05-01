@@ -314,3 +314,83 @@ gradlew build
 	```
 
 ## 6. 웹 MVC 개발
+## 7. 스프링 DB 접근 기술
+- 스프링은 DB와 연동을 하려면 JDBC라는 드라이버가 있어야 해서 `build.gralde`에 값을 추가해 준다
+	```gradle
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	```
+
+- 스프링이 DB랑 연결될 때 데이터베이스가 제공하는 클라이언트가 필요하고 해당 설정
+	```gradle	
+	runtimeOnly 'com.h2database:h2'
+	```
+
+- 개방 폐쇠 원칙(OCP, Open-Closed Principle)
+	![](img/8.png)  
+	```java
+	package hello.hello_spring;
+
+	import hello.hello_spring.repository.JdbcMemberRepository;
+	import hello.hello_spring.repository.MemberRepository;
+	import hello.hello_spring.repository.MemoryMemberRepository;
+	import hello.hello_spring.service.MemberService;
+	import org.springframework.beans.factory.annotation.Autowired;
+	import org.springframework.context.annotation.Bean;
+	import org.springframework.context.annotation.Configuration;
+
+	import javax.sql.DataSource;
+
+	@Configuration
+	public class SpringConfig {
+
+		private DataSource dataSource;
+
+		@Autowired
+		public SpringConfig(DataSource dataSource) {
+			this.dataSource = dataSource;
+		}
+
+		@Bean
+		public MemberService memberService() {
+			return new MemberService(memberRepository());
+		}
+
+		@Bean
+		public MemberRepository memberRepository() {
+	//        return new MemoryMemberRepository();
+			return new JdbcMemberRepository(dataSource);
+		}
+	}
+	```
+	- 확장에서는 열려있고, 수정, 변경에는 닫혀있다
+	- 스프링의 DI(의존성 주입)을 사용하면 기존 코드를 전혀 손대지 않고, 설정만으로 구현 클래스를 변경할 수 있다
+
+### 스프링 통합 테스트
+- @SpringBootTest: 스프링 컨테이너와 테스트를 함께 실행
+- @Transactional: 테스트 시작 전에 트랜잭션을 시작하고, 테스트 완료 후에 롤백한다, 즉 DB에 데이터가 남지 않아 다음 테스트에 영향을 주지 않는다
+- 가급적 순수한 단위 테스트가 좋은 테스트일 확률이 높다, 스프링 컨테이너 없이 테스트 하는게 좀 더 좋을 확률이 높다
+
+### JdbcTemplate
+- 아직 좀 여러움
+
+### JPA
+- JPA는 기존의 반복 코드는 물론이고, 기본적인 SQL도 JPA가 직접 만들어서 실행해준다.
+- JPA를 사용하면, SQL과 데이터 중심의 설계에서 객체 중심의 설계로 패러다임을 전환을 할 수 있다.
+- 라이브러리 추가
+	```gradle
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	```
+- application.properties 설정 추가
+	```java
+	spring.jpa.show-sql=true
+	spring.jpa.hibernate.ddl-auto=none
+	```
+	- show-sql : JPA가 생성하는 SQL을 출력한다.
+	- ddl-auto : JPA는 테이블을 자동으로 생성하는 기능을 제공하는데 none을 사용하면 해당 기능을 끈다.
+	- create 를 사용하면 엔티티 정보를 바탕으로 테이블도 직접 생성해준다.
+- 어려움
+
+### 스프링 데이터 JPA 제공 기능
+- 인터페이스를 통한 기본적인 CRUD
+- findByName() , findByEmail() 처럼 메서드 이름 만으로 조회 기능 제공
+- 페이징 기능 자동 제공
