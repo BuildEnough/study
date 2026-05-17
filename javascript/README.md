@@ -754,3 +754,32 @@ sort() 함수로 오름차순 정렬
     console.log(arr); // [1, 2, 3, 10]
 </script>
 ```
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+## 문서객체(DOM)
+- 노드: HTML 문서를 구성하고 있는 개별적인 단위
+- Dom: 노드의 집합
+
+### Dom 요소 선택
+- getElementById('아이디명')
+    - 아이디명으로 DOM 요소 선택
+- getElementTagName('요소명')
+    - 태그명으로 DOM 요소 선택
+- getElementByClassName('클래스명')
+    - 클래스명으로 DOM 요소 선택
+- querySelector('css선택자')
+    - css 선택자로 DOM 요소 선택
+- querySelectorAll('css선택자')
+    - 같은 css 선택자 모두 선택
