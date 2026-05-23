@@ -1,4 +1,4 @@
-# HTML / CSS 공부 정리
+# HTML / CSS
 
 ## HTML 정리
 
