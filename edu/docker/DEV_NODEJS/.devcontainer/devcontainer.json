@@ -1,0 +1,14 @@
+{
+  "name": "my node js",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+  },
+  "forwardPorts": [3301],
+  "postCreateCommand": "npm install && echo 'Ready!'",
+  "mounts": [
+    "source=D:/data/container_data/dist,target=/workspaces/study/edu/docker/DEV_NODEJS/dist,type=bind"
+  ]
+}
