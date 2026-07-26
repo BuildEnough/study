@@ -168,7 +168,7 @@ createApp(App).mount('#app') //createApp() 함수로 vue application의 인스�
 - `클래스`가 객체를  생성하기 위한 템플릿이라면, 인스턴스는 해당 클래스의 실제 객체
 ```javascript
 class Person {
-  construtor(name, age) {
+  constructor(name, age) {
     this.name = name;
     this.age = age;
   }
@@ -180,7 +180,7 @@ class Person {
 
 // Person 클래스의 인스턴스 생성
 const person1 = new Person('Kim', 25);
-const person1 = new Person('John', 30);
+const person2 = new Person('John', 30);
 console.log(person1.name); // Kim
 console.log(person2.age); // 30
 person1.sayHello(); // 안녕하세요 저는 Kim입니다.
