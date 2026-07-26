@@ -96,7 +96,7 @@ public class App {
     - 변수명은 의미있는 단어의 조합: personalAccount, myList...
 
 - 데이터 타입: Java에서 변수에 어떤 데이터를 넣을지 지정
-    - int, long, flaot, double, char, String, boolean, ...
+    - int, long, float, double, char, String, boolean, ...
     - 데이터를 넣을 때의 실수를 줄이기 위한 방법
 
 - 클래스 타입: java.****. 형태로 클래스로 만들어진 타입
@@ -153,7 +153,7 @@ class Student {
 }
 
 // 객체지향은 그룹핑(단위 묶음)
-Studnet std1 = new Student();
+Student std1 = new Student();
 std1.name = "Kim";
 std1.age = 20;
 std1.score = 95;
@@ -161,12 +161,12 @@ std1.score = 95;
 
 ```java
 // 객체 활용방법
-List<Student> studnes = new ArrayList<>();
+List<Student> students = new ArrayList<>();
 
 // 데이터 추가, 여러 데이터를 쉽게 추가가능
-studnes.add(new Student("enough", 29, 100));
-studnes.add(new Student("build", 30, 99));
-studnes.add(new Student("add", 31, 98));
+students.add(new Student("enough", 29, 100));
+students.add(new Student("build", 30, 99));
+students.add(new Student("add", 31, 98));
 ```
 
 ### 클래스와 객체

@@ -1,0 +1,36 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Java / Gradle / Maven
+.gradle/
+build/
+target/
+out/
+*.class
+*.jar
+*.trace.db
+*.mv.db
+
+# Node.js
+node_modules/
+dist/
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log

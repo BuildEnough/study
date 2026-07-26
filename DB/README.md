@@ -1,7 +1,7 @@
 ## Day01
 
 ### 프로그래밍이란
-사용자에 요구에 맞춰 데이터를 처리하는 것
+사용자의 요구에 맞춰 데이터를 처리하는 것
 
 ### 데이터/정보
 
@@ -24,7 +24,7 @@
     - PostgreSQL
 
 - NoSQL 데이터베이스(빅데이터...)
-    - Radis
+    - Redis
     - MongoDB
     - Apache Cassandra
 
@@ -97,7 +97,7 @@
     - Database Navigator에서 DB연결 시작
     - 우클릭 -> create -> connection
     - 연결 정보 입력 -> test connection -> 완료
-    - 주의사항: port 번호 확인, Database 이름 확인, Usernmae과 Password 일치
+    - 주의사항: port 번호 확인, Database 이름 확인, Username과 Password 일치
 
 3. VSCODE EXTENSIONS
 - Database Client  

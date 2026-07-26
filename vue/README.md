@@ -62,7 +62,7 @@ npm run dev
 
 ### 과거 버전
 ```
-vue cretae 폴더_이름
+vue create 폴더_이름
 ```
 
 ## CDN과 NPM 비교
